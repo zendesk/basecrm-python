@@ -33,7 +33,7 @@ import basecrm
 ```python
 import basecrm
 
-// Then we instantiate a client (as shown below)
+# Then we instantiate a client (as shown below)
 ```
 
 ### Build a client
