@@ -1,1 +1,13 @@
+MANIFEST
+pylint.txt
+violations.pyflakes.txt
+build/
+dist/
+docs/_build
+basecrm.egg-info/
 *.pyc
+*.swp
+*.egg
+*.class
+env/
+
