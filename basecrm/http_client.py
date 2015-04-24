@@ -8,26 +8,99 @@ from basecrm.errors import RateLimitError, RequestError, ResourceError, ServerEr
 
 
 class HttpClient(object):
+    """
+    Wrapper over :module:`requests` that understands Base CRM envelope, encoding and decoding schema.
+    """
+
+    """
+    Supported REST API version prefix.
+    """
     API_VERSION = '/v2'
 
     def __init__(self, config):
+        """
+        :param :class:`basecrm.Configuration` config: Base CRM client configuration.
+        """
+
         self.config = config
         if self.config.verbose:
             self.enable_logging()
 
     def get(self, url, params=None, **kwargs):
+        """
+        Send a GET request.
+
+        :param str url: Sub URL for the request. You MUST not specify neither base url nor api version prefix.
+        :param dict params: (optional) Dictionary of query parameters.
+        :param dict **kwargs: (optional) Other parameters which are directly passed to :func:`requests.request`.
+        :return: Tuple of three elements: (http status code, headers, response - either parsed json or plain text)
+        :rtype: tuple
+        """
+
         return self.request('get', url, params=params, **kwargs)
 
     def post(self, url, body=None, **kwargs):
+        """
+        Send a POST request.
+
+        :param str url: Sub URL for the request. You MUST not specify neither base url nor api version prefix.
+        :param dict body: (optional) Dictionary of body attributes that will be wrapped with envelope and json encoded.
+        :param dict **kwargs: (optional) Other parameters which are directly passed to :func:`requests.request`.
+        :return: Tuple of three elements: (http status code, headers, response - either parsed json or plain text)
+        :rtype: tuple
+        """
+
         return self.request('post', url, body=body, **kwargs)
 
     def put(self, url, body=None, **kwargs):
+        """
+        Send a PUT request.
+
+        :param str url: Sub URL for the request. You MUST not specify neither base url nor api version prefix.
+        :param dict body: (optional) Dictionary of body attributes that will be wrapped with envelope and json encoded.
+        :param dict **kwargs: (optional) Other parameters which are directly passed to :func:`requests.request`.
+        :return: Tuple of three elements: (http status code, headers, response - either parsed json or plain text)
+        :rtype: tuple
+        """
+
         return self.request('put', url, body=body, **kwargs)
 
     def delete(self, url, params=None, **kwargs):
+        """
+        Send a DELETE request.
+
+        :param str url: Sub URL for the request. You MUST not specify neither base url nor api version prefix.
+        :param dict params: (optional) Dictionary of query parameters.
+        :param dict **kwargs: (optional) Other parameters which are directly passed to :func:`requests.request`.
+        :return: Tuple of three elements: (http status code, headers, response - either parsed json or plain text)
+        :rtype: tuple
+        """
+
         return self.request('delete', url, params=params, **kwargs)
 
     def request(self, method, url, params=None, body=None, **kwargs):
+        """
+        Send an HTTP request.
+
+        The :param:`params` will be properly encoded, as well as :param:`body` which
+        will be wrapped with envelope the API expects and json encoded.
+
+        When you get a reponse the method will try to json decode the response,
+        if the media type represents json, unwrap the envelope and bunchify what has left,
+        for JavaScript like access.
+
+        :param str url: Sub URL for the request. You MUST not specify neither base url nor api version prefix.
+        :param dict params: (optional) Dictionary of query parameters.
+        :param dict body: (optional) Dictionary of body attributes that will be wrapped with envelope and json encoded.
+        :param dict **kwargs: (optional) Other parameters which are directly passed to :func:`requests.request`.
+        :raises RequestError: if authentication failed, invalid query parameter etc.
+        :raises RateLimitError: if rate limit exceeded.
+        :raises ResourceError: if requests payload included invalid attributes or were missing.
+        :raises ServerError: if Base CRM backend servers encounterered an unexpected condition.
+        :return: Tuple of three elements: (http status code, headers, response - either parsed json or plain text)
+        :rtype: tuple
+        """
+
         url = "{base_url}{version}{resource}".format(base_url=self.config.base_url,
                                                      version=self.API_VERSION,
                                                      resource=url)
