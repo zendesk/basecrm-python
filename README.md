@@ -333,6 +333,13 @@ And to run a single suite:
 $ python setup.py test -s basecrm.test.test_associated_contacts_service.AssociatedContactsServiceTests
 ```
 
+## Thanks
+
+We would like to give huge thanks to [YunoJuno](https://www.yunojuno.com). They reqlinquished the package name
+so we were able to publish official wrapper under __basecrm__ name.
+
+Thank You!
+
 ## License
 MIT
 
