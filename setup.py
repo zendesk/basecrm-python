@@ -12,11 +12,20 @@ def read_file(name):
         print("could not read %r" % name)
         f.close()
 
+
+def long_description():
+    content = read_file('README.md')
+    try:
+        import pypandoc
+        return pypandoc.convert(content, 'rst', format='md')
+    except ImportError:
+        return content
+
 setup(
     name='basecrm',
     version='1.0.0',
-    description='BaseCRM Official API V library client for Python',
-    long_description=read_file('README.md'),
+    description='BaseCRM Official API V22 library client for Python',
+    long_description=long_description(),
     author='BaseCRM developers',
     author_email='developers@getbase.com',
     url='https://github.com/basecrm/basecrm-python',
