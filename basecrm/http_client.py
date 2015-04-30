@@ -106,7 +106,8 @@ class HttpClient(object):
                                                      resource=url)
         headers = {
             'Accept': 'application/json',
-            'Authorization': "Bearer {0}".format(self.config.access_token)
+            'Authorization': "Bearer {0}".format(self.config.access_token),
+            'User-Agent': self.config.user_agent,
         }
 
         if body is not None:
