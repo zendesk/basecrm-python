@@ -23,7 +23,7 @@ def long_description():
 
 setup(
     name='basecrm',
-    version='1.0.2',
+    version='1.0.3.dev',
     description='BaseCRM Official API V2 library client for Python',
     long_description=long_description(),
     author='BaseCRM developers',

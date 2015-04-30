@@ -16,7 +16,20 @@ def lazyproperty(function):
         return getattr(self.__class__, attribute) 
     return __lazyproperty
 
-class BaseTestCase(unittest.TestCase):
+if hasattr(unittest.TestCase, 'assertIsInstance'):
+    class UnittestCompat:
+        pass
+else:
+    class UnittestCompat:
+        def assertIsInstance(self, obj, cls):
+            if not isinstance(obj, cls):
+                self.fail("%s is not an instance of %r" % (safe_repr(obj), cls))
+
+        def assertGreaterEqual(self, given, expected):
+            if not (given >= expected):
+                self.fail("%s given mut be greater than or equal to %s" % (given, expected))
+                
+class BaseTestCase(unittest.TestCase, UnittestCompat):
     
     @lazyproperty
     def client(self):

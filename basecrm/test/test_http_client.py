@@ -2,47 +2,54 @@ import basecrm
 from basecrm.test.testutils import BaseTestCase
 from requests.exceptions import ConnectionError
 
+
 class HttpClientTests(BaseTestCase):
     @property
     def http_client(self):
         return self.client.http_client
 
     def test_invalid_request_error(self):
-        with self.assertRaises(basecrm.RequestError) as cm:
+        try:
             self.http_client.get("/users/self", params={'unknown': 'param'})
-
-        exception = cm.exception
-
-        self.assertEqual(exception.http_status, 400)
-        self.assertGreaterEqual(len(exception.logref), 1)
-        self.assertIsInstance(exception.errors, list)
-        self.assertGreaterEqual(len(exception.errors), 1)
+        except basecrm.RequestError as exception:
+            self.assertEqual(exception.http_status, 400)
+            self.assertGreaterEqual(len(exception.logref), 1)
+            self.assertIsInstance(exception.errors, list)
+            self.assertGreaterEqual(len(exception.errors), 1)
+        except Exception as e:
+            self.fail("Unexpected exception type %r" % type(e))
+        else:
+            self.fail("Exception expected")
 
     def test_invalid_payload_error(self):
-        with self.assertRaises(basecrm.ResourceError) as cm:
+        try:
             self.http_client.post("/deals", body={'unknown': 'attribute'})
-
-        exception = cm.exception
-
-        self.assertEqual(exception.http_status, 422)
-        self.assertGreaterEqual(len(exception.logref), 1)
-        self.assertIsInstance(exception.errors, list)
-        self.assertGreaterEqual(len(exception.errors), 1)
+        except basecrm.ResourceError as exception:
+            self.assertEqual(exception.http_status, 422)
+            self.assertGreaterEqual(len(exception.logref), 1)
+            self.assertIsInstance(exception.errors, list)
+            self.assertGreaterEqual(len(exception.errors), 1)
+        except Exception as e:
+            self.fail("Unexpected exception type %r" % type(e))
+        else:
+            self.fail("Exception expected")
 
     def test_authentication_error(self):
         http_client = basecrm.Client(access_token='X'*64,
                                      user_agent=self.user_agent,
                                      verbose=True).http_client
 
-        with self.assertRaises(basecrm.RequestError) as cm:
+        try:
             http_client.get("/users/self")
-
-        exception = cm.exception
-
-        self.assertEqual(exception.http_status, 401)
-        self.assertGreaterEqual(len(exception.logref), 1)
-        self.assertIsInstance(exception.errors, list)
-        self.assertGreaterEqual(len(exception.errors), 1)
+        except basecrm.RequestError as exception:
+            self.assertEqual(exception.http_status, 401)
+            self.assertGreaterEqual(len(exception.logref), 1)
+            self.assertIsInstance(exception.errors, list)
+            self.assertGreaterEqual(len(exception.errors), 1)
+        except Exception as e:
+            self.fail("Unexpected exception type %r" % type(e))
+        else:
+            self.fail("Exception expected")
 
     def test_connection_error(self):
         http_client = basecrm.Client(access_token='X'*64,
@@ -50,5 +57,12 @@ class HttpClientTests(BaseTestCase):
                                      user_agent=self.user_agent,
                                      verbose=True).http_client
 
-        with self.assertRaises(ConnectionError):
+        try:
             http_client.get("/users/self")
+        except ConnectionError as e:
+            # OK
+            self.assertTrue(True)
+        except Exception as e:
+            self.fail("Unexpected exception type %r" % type(e))
+        else:
+            self.fail("Exception expected")
