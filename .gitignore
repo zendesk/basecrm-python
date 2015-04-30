@@ -10,4 +10,4 @@ basecrm.egg-info/
 *.egg
 *.class
 env/
-
+.eggs/
