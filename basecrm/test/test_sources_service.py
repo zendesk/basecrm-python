@@ -1,5 +1,5 @@
 import unittest
-import bunch
+import munch
 
 import basecrm 
 from basecrm.test.testutils import BaseTestCase
@@ -27,23 +27,23 @@ class SourcesServiceTests(BaseTestCase):
         sources = self.client.sources.list(page=1)
         self.assertIsInstance(sources, list)
         for source in sources:
-            self.assertIsInstance(source, bunch.Bunch)
+            self.assertIsInstance(source, munch.Munch)
  
 
     def test_create(self):
-        self.assertIsInstance(self.source, bunch.Bunch)
+        self.assertIsInstance(self.source, munch.Munch)
         self.assertGreaterEqual(len(self.source), 1)
  
 
     def test_retrieve(self):
         found_source = self.client.sources.retrieve(self.source.id);
-        self.assertIsInstance(found_source, bunch.Bunch);
+        self.assertIsInstance(found_source, munch.Munch);
         self.assertEqual(found_source.id, self.source.id);
  
 
     def test_update(self):
         updated_source = self.client.sources.update(self.source.id, self.source)
-        self.assertIsInstance(updated_source, bunch.Bunch)
+        self.assertIsInstance(updated_source, munch.Munch)
         self.assertGreaterEqual(len(updated_source), 1)
  
 

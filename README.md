@@ -59,7 +59,7 @@ The library follows few architectural principles you should understand before di
 1. Interactions with resources are done via service objects.
 2. Service objects are exposed as properties on client instances.
 3. Service objects expose resource-oriented actions.
-4. Actions return dictionaries that support attribute-style access, a la JavaScript (thanks to Bunch).
+4. Actions return dictionaries that support attribute-style access, a la JavaScript (thanks to Bunch and it's form Munch).
 
 For example, to interact with deals API you will use `basecrm.DealsService`, which you can get if you call:
 
@@ -72,7 +72,7 @@ To retrieve list of resources and use filtering you will call `#list` method:
 
 ```python
 client = basecrm.Client(access_token='<YOUR_PERSONAL_ACCESS_TOKEN>')
-client.deals.list(organization_id=google.id, hot=True) # list(dict|Bunch)
+client.deals.list(organization_id=google.id, hot=True) # list(dict|Munch)
 ```
 
 To find a resource by it's unique identifier use `#retrieve` method:

@@ -1,5 +1,5 @@
 import unittest
-import bunch
+import munch
 
 import basecrm 
 from basecrm.test.testutils import BaseTestCase
@@ -27,23 +27,23 @@ class LossReasonsServiceTests(BaseTestCase):
         loss_reasons = self.client.loss_reasons.list(page=1)
         self.assertIsInstance(loss_reasons, list)
         for loss_reason in loss_reasons:
-            self.assertIsInstance(loss_reason, bunch.Bunch)
+            self.assertIsInstance(loss_reason, munch.Munch)
  
 
     def test_create(self):
-        self.assertIsInstance(self.loss_reason, bunch.Bunch)
+        self.assertIsInstance(self.loss_reason, munch.Munch)
         self.assertGreaterEqual(len(self.loss_reason), 1)
  
 
     def test_retrieve(self):
         found_loss_reason = self.client.loss_reasons.retrieve(self.loss_reason.id);
-        self.assertIsInstance(found_loss_reason, bunch.Bunch);
+        self.assertIsInstance(found_loss_reason, munch.Munch);
         self.assertEqual(found_loss_reason.id, self.loss_reason.id);
  
 
     def test_update(self):
         updated_loss_reason = self.client.loss_reasons.update(self.loss_reason.id, self.loss_reason)
-        self.assertIsInstance(updated_loss_reason, bunch.Bunch)
+        self.assertIsInstance(updated_loss_reason, munch.Munch)
         self.assertGreaterEqual(len(updated_loss_reason), 1)
  
 

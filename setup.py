@@ -23,7 +23,7 @@ def long_description():
 
 setup(
     name='basecrm',
-    version='1.0.3.dev',
+    version='1.0.3',
     description='BaseCRM Official API V2 library client for Python',
     long_description=long_description(),
     author='BaseCRM developers',
@@ -32,7 +32,8 @@ setup(
     license='MIT',
     packages=['basecrm', 'basecrm.test'],
     test_suite='basecrm.test.all',
-    install_requires=['requests', 'bunch', 'six'],
+    install_requires=['requests', 'munch'],
+    use_2to3=True,
     classifiers=[
         "Development Status :: 5 - Production/Stable",
         "Intended Audience :: Developers",
@@ -42,5 +43,9 @@ setup(
         "Programming Language :: Python :: 2",
         "Programming Language :: Python :: 2.6",
         "Programming Language :: Python :: 2.7",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.2",
+        "Programming Language :: Python :: 3.3",
+        "Programming Language :: Python :: 3.4",
         "Topic :: Software Development :: Libraries :: Python Modules",
     ])

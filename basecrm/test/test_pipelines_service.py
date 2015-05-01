@@ -1,5 +1,5 @@
 import unittest
-import bunch
+import munch
 
 import basecrm 
 from basecrm.test.testutils import BaseTestCase
@@ -15,5 +15,5 @@ class PipelinesServiceTests(BaseTestCase):
         pipelines = self.client.pipelines.list(page=1)
         self.assertIsInstance(pipelines, list)
         for pipeline in pipelines:
-            self.assertIsInstance(pipeline, bunch.Bunch)
+            self.assertIsInstance(pipeline, munch.Munch)
  

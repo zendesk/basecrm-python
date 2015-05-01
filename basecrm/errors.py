@@ -1,4 +1,4 @@
-from bunch import bunchify
+from munch import munchify
 
 
 class ConfigurationError(Exception):
@@ -27,7 +27,7 @@ class BaseError(Exception):
 
     :attribute int http_status: Http status code.
     :attribute str logref: Request unique identifier.
-    :attribute list errors: List of :class:`Bunch <bunch.Bunch>` objects repsenting returned errors.
+    :attribute list errors: List of :class:`Munch <munch.Munch>` objects repsenting returned errors.
 
     Each error object has following attributes:
     :attribute str code: The error code.
@@ -43,7 +43,7 @@ class BaseError(Exception):
         :param dict errors_payload: Json decoded payload from the errors response.
         """
         self.http_status = http_status
-        self.errors = [bunchify(error_envelope['error'])
+        self.errors = [munchify(error_envelope['error'])
                        for error_envelope in errors_payload['errors']]
         self.logref = errors_payload['meta']['logref']
 

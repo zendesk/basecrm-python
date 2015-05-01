@@ -1,5 +1,5 @@
 import unittest
-import bunch
+import munch
 
 import basecrm 
 from basecrm.test.testutils import BaseTestCase
@@ -15,5 +15,5 @@ class StagesServiceTests(BaseTestCase):
         stages = self.client.stages.list(page=1)
         self.assertIsInstance(stages, list)
         for stage in stages:
-            self.assertIsInstance(stage, bunch.Bunch)
+            self.assertIsInstance(stage, munch.Munch)
  

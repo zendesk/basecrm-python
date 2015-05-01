@@ -1,5 +1,5 @@
 import unittest
-import bunch
+import munch
 
 import basecrm 
 from basecrm.test.testutils import BaseTestCase
@@ -21,11 +21,11 @@ class AssociatedContactsServiceTests(BaseTestCase):
         associated_contacts = self.client.associated_contacts.list(self.associated_contact.deal_id, page=1)
         self.assertIsInstance(associated_contacts, list)
         for associated_contact in associated_contacts:
-            self.assertIsInstance(associated_contact, bunch.Bunch)
+            self.assertIsInstance(associated_contact, munch.Munch)
  
 
     def test_create(self):
-        self.assertIsInstance(self.associated_contact, bunch.Bunch)
+        self.assertIsInstance(self.associated_contact, munch.Munch)
         self.assertGreaterEqual(len(self.associated_contact), 1)
  
 

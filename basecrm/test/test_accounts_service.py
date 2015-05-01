@@ -1,5 +1,5 @@
 import unittest
-import bunch
+import munch
 
 import basecrm 
 from basecrm.test.testutils import BaseTestCase
@@ -13,5 +13,5 @@ class AccountsServiceTests(BaseTestCase):
 
     def test_self(self):
         resource = self.client.accounts.self()
-        self.assertIsInstance(resource, bunch.Bunch)
+        self.assertIsInstance(resource, munch.Munch)
  

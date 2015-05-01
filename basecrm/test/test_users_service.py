@@ -1,5 +1,5 @@
 import unittest
-import bunch
+import munch
 
 import basecrm 
 from basecrm.test.testutils import BaseTestCase
@@ -21,16 +21,16 @@ class UsersServiceTests(BaseTestCase):
         users = self.client.users.list(page=1)
         self.assertIsInstance(users, list)
         for user in users:
-            self.assertIsInstance(user, bunch.Bunch)
+            self.assertIsInstance(user, munch.Munch)
  
 
     def test_retrieve(self):
         found_user = self.client.users.retrieve(self.user.id);
-        self.assertIsInstance(found_user, bunch.Bunch);
+        self.assertIsInstance(found_user, munch.Munch);
         self.assertEqual(found_user.id, self.user.id);
  
 
     def test_self(self):
         resource = self.client.users.self()
-        self.assertIsInstance(resource, bunch.Bunch)
+        self.assertIsInstance(resource, munch.Munch)
  

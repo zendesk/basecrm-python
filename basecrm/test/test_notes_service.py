@@ -1,5 +1,5 @@
 import unittest
-import bunch
+import munch
 
 import basecrm 
 from basecrm.test.testutils import BaseTestCase
@@ -27,23 +27,23 @@ class NotesServiceTests(BaseTestCase):
         notes = self.client.notes.list(page=1)
         self.assertIsInstance(notes, list)
         for note in notes:
-            self.assertIsInstance(note, bunch.Bunch)
+            self.assertIsInstance(note, munch.Munch)
  
 
     def test_create(self):
-        self.assertIsInstance(self.note, bunch.Bunch)
+        self.assertIsInstance(self.note, munch.Munch)
         self.assertGreaterEqual(len(self.note), 1)
  
 
     def test_retrieve(self):
         found_note = self.client.notes.retrieve(self.note.id);
-        self.assertIsInstance(found_note, bunch.Bunch);
+        self.assertIsInstance(found_note, munch.Munch);
         self.assertEqual(found_note.id, self.note.id);
  
 
     def test_update(self):
         updated_note = self.client.notes.update(self.note.id, self.note)
-        self.assertIsInstance(updated_note, bunch.Bunch)
+        self.assertIsInstance(updated_note, munch.Munch)
         self.assertGreaterEqual(len(updated_note), 1)
  
 

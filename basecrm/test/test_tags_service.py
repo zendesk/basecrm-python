@@ -1,5 +1,5 @@
 import unittest
-import bunch
+import munch
 
 import basecrm 
 from basecrm.test.testutils import BaseTestCase
@@ -27,23 +27,23 @@ class TagsServiceTests(BaseTestCase):
         tags = self.client.tags.list(page=1)
         self.assertIsInstance(tags, list)
         for tag in tags:
-            self.assertIsInstance(tag, bunch.Bunch)
+            self.assertIsInstance(tag, munch.Munch)
  
 
     def test_create(self):
-        self.assertIsInstance(self.tag, bunch.Bunch)
+        self.assertIsInstance(self.tag, munch.Munch)
         self.assertGreaterEqual(len(self.tag), 1)
  
 
     def test_retrieve(self):
         found_tag = self.client.tags.retrieve(self.tag.id);
-        self.assertIsInstance(found_tag, bunch.Bunch);
+        self.assertIsInstance(found_tag, munch.Munch);
         self.assertEqual(found_tag.id, self.tag.id);
  
 
     def test_update(self):
         updated_tag = self.client.tags.update(self.tag.id, self.tag)
-        self.assertIsInstance(updated_tag, bunch.Bunch)
+        self.assertIsInstance(updated_tag, munch.Munch)
         self.assertGreaterEqual(len(updated_tag), 1)
  
 

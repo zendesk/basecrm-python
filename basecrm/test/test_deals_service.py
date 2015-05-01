@@ -1,5 +1,5 @@
 import unittest
-import bunch
+import munch
 
 import basecrm 
 from basecrm.test.testutils import BaseTestCase
@@ -27,23 +27,23 @@ class DealsServiceTests(BaseTestCase):
         deals = self.client.deals.list(page=1)
         self.assertIsInstance(deals, list)
         for deal in deals:
-            self.assertIsInstance(deal, bunch.Bunch)
+            self.assertIsInstance(deal, munch.Munch)
  
 
     def test_create(self):
-        self.assertIsInstance(self.deal, bunch.Bunch)
+        self.assertIsInstance(self.deal, munch.Munch)
         self.assertGreaterEqual(len(self.deal), 1)
  
 
     def test_retrieve(self):
         found_deal = self.client.deals.retrieve(self.deal.id);
-        self.assertIsInstance(found_deal, bunch.Bunch);
+        self.assertIsInstance(found_deal, munch.Munch);
         self.assertEqual(found_deal.id, self.deal.id);
  
 
     def test_update(self):
         updated_deal = self.client.deals.update(self.deal.id, self.deal)
-        self.assertIsInstance(updated_deal, bunch.Bunch)
+        self.assertIsInstance(updated_deal, munch.Munch)
         self.assertGreaterEqual(len(updated_deal), 1)
  
 

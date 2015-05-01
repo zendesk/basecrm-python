@@ -2,7 +2,7 @@ import requests
 import json
 
 
-from bunch import bunchify
+from munch import munchify
 
 from basecrm.errors import RateLimitError, RequestError, ResourceError, ServerError
 
@@ -86,7 +86,7 @@ class HttpClient(object):
         will be wrapped with envelope the API expects and json encoded.
 
         When you get a reponse the method will try to json decode the response,
-        if the media type represents json, unwrap the envelope and bunchify what has left,
+        if the media type represents json, unwrap the envelope and munchify what has left,
         for JavaScript like access.
 
         :param str url: Sub URL for the request. You MUST not specify neither base url nor api version prefix.
@@ -157,7 +157,7 @@ class HttpClient(object):
 
     @staticmethod
     def unwrap_envelope(body):
-        return [bunchify(item['data']) for item in body['items']] if 'items' in body else bunchify(body['data'])
+        return [munchify(item['data']) for item in body['items']] if 'items' in body else munchify(body['data'])
 
     def enable_logging(self):
         import logging
