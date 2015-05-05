@@ -154,7 +154,7 @@ Sample below shows how to properly handle exceptions:
         # Resource related error
         print 'Http status = ' + e.http_status
         print 'Request ID = ' + e.logref
-        for error in e.errors: 
+        for error in e.errors:
             print 'field = ' + error.field
             print 'code = ' + error.code
             print 'message = ' + error.message
@@ -180,7 +180,9 @@ Account
     client = basecrm.Client(access_token='<YOUR_PERSONAL_ACCESS_TOKEN>')
     client.accounts # => basecrm.AccountsService
 
-Actions: \* Retrieve account details - ``client.accounts.self``
+Actions:
+
+* Retrieve account details - ``client.accounts.self``
 
 AssociatedContact
 ~~~~~~~~~~~~~~~~~
@@ -190,10 +192,11 @@ AssociatedContact
     client = basecrm.Client(access_token='<YOUR_PERSONAL_ACCESS_TOKEN>')
     client.associated_contacts # => basecrm.AssociatedContactsService
 
-Actions: \* Retrieve deal's associated contacts -
-``client.associated_contacts.list`` \* Create an associated contact -
-``client.associated_contacts.create`` \* Remove an associated contact -
-``client.associated_contacts.destroy``
+Actions:
+
+* Retrieve deal's associated contacts - ``client.associated_contacts.list``
+* Create an associated contact - ``client.associated_contacts.create``
+* Remove an associated contact - ``client.associated_contacts.destroy``
 
 Contact
 ~~~~~~~
@@ -203,11 +206,13 @@ Contact
     client = basecrm.Client(access_token='<YOUR_PERSONAL_ACCESS_TOKEN>')
     client.contacts # => basecrm.ContactsService
 
-Actions: \* Retrieve all contacts - ``client.contacts.list`` \* Create a
-contact - ``client.contacts.create`` \* Retrieve a single contact -
-``client.contacts.retrieve`` \* Update a contact -
-``client.contacts.update`` \* Delete a contact -
-``client.contacts.destroy``
+Actions:
+
+* Retrieve all contacts - ``client.contacts.list``
+* Create a contact - ``client.contacts.create``
+* Retrieve a single contact - ``client.contacts.retrieve``
+* Update a contact - ``client.contacts.update``
+* Delete a contact - ``client.contacts.destroy``
 
 Deal
 ~~~~
@@ -217,10 +222,13 @@ Deal
     client = basecrm.Client(access_token='<YOUR_PERSONAL_ACCESS_TOKEN>')
     client.deals # => basecrm.DealsService
 
-Actions: \* Retrieve all deals - ``client.deals.list`` \* Create a deal
-- ``client.deals.create`` \* Retrieve a single deal -
-``client.deals.retrieve`` \* Update a deal - ``client.deals.update`` \*
-Delete a deal - ``client.deals.destroy``
+Actions:
+
+* Retrieve all deals - ``client.deals.list``
+* Create a deal - ``client.deals.create``
+* Retrieve a single deal - ``client.deals.retrieve``
+* Update a deal - ``client.deals.update``
+* Delete a deal - ``client.deals.destroy``
 
 Lead
 ~~~~
@@ -230,10 +238,13 @@ Lead
     client = basecrm.Client(access_token='<YOUR_PERSONAL_ACCESS_TOKEN>')
     client.leads # => basecrm.LeadsService
 
-Actions: \* Retrieve all leads - ``client.leads.list`` \* Create a lead
-- ``client.leads.create`` \* Retrieve a single lead -
-``client.leads.retrieve`` \* Update a lead - ``client.leads.update`` \*
-Delete a lead - ``client.leads.destroy``
+Actions:
+
+* Retrieve all leads - ``client.leads.list``
+* Create a lead - ``client.leads.create``
+* Retrieve a single lead - ``client.leads.retrieve``
+* Update a lead - ``client.leads.update``
+* Delete a lead - ``client.leads.destroy``
 
 LossReason
 ~~~~~~~~~~
@@ -243,11 +254,13 @@ LossReason
     client = basecrm.Client(access_token='<YOUR_PERSONAL_ACCESS_TOKEN>')
     client.loss_reasons # => basecrm.LossReasonsService
 
-Actions: \* Retrieve all reasons - ``client.loss_reasons.list`` \*
-Create a loss reason - ``client.loss_reasons.create`` \* Retrieve a
-single reason - ``client.loss_reasons.retrieve`` \* Update a loss reason
-- ``client.loss_reasons.update`` \* Delete a reason -
-``client.loss_reasons.destroy``
+Actions:
+
+* Retrieve all reasons - ``client.loss_reasons.list``
+* Create a loss reason - ``client.loss_reasons.create``
+* Retrieve a single reason - ``client.loss_reasons.retrieve``
+* Update a loss reason - ``client.loss_reasons.update``
+* Delete a reason - ``client.loss_reasons.destroy``
 
 Note
 ~~~~
@@ -257,10 +270,13 @@ Note
     client = basecrm.Client(access_token='<YOUR_PERSONAL_ACCESS_TOKEN>')
     client.notes # => basecrm.NotesService
 
-Actions: \* Retrieve all notes - ``client.notes.list`` \* Create a note
-- ``client.notes.create`` \* Retrieve a single note -
-``client.notes.retrieve`` \* Update a note - ``client.notes.update`` \*
-Delete a note - ``client.notes.destroy``
+Actions:
+
+* Retrieve all notes - ``client.notes.list``
+* Create a note - ``client.notes.create``
+* Retrieve a single note - ``client.notes.retrieve``
+* Update a note - ``client.notes.update``
+* Delete a note - ``client.notes.destroy``
 
 Pipeline
 ~~~~~~~~
@@ -270,7 +286,9 @@ Pipeline
     client = basecrm.Client(access_token='<YOUR_PERSONAL_ACCESS_TOKEN>')
     client.pipelines # => basecrm.PipelinesService
 
-Actions: \* Retrieve all pipelines - ``client.pipelines.list``
+Actions:
+
+* Retrieve all pipelines - ``client.pipelines.list``
 
 Source
 ~~~~~~
@@ -280,11 +298,13 @@ Source
     client = basecrm.Client(access_token='<YOUR_PERSONAL_ACCESS_TOKEN>')
     client.sources # => basecrm.SourcesService
 
-Actions: \* Retrieve all sources - ``client.sources.list`` \* Create a
-source - ``client.sources.create`` \* Retrieve a single source -
-``client.sources.retrieve`` \* Update a source -
-``client.sources.update`` \* Delete a source -
-``client.sources.destroy``
+Actions:
+
+* Retrieve all sources - ``client.sources.list``
+* Create a source - ``client.sources.create``
+* Retrieve a single source - ``client.sources.retrieve``
+* Update a source - ``client.sources.update``
+* Delete a source - ``client.sources.destroy``
 
 Stage
 ~~~~~
@@ -294,7 +314,9 @@ Stage
     client = basecrm.Client(access_token='<YOUR_PERSONAL_ACCESS_TOKEN>')
     client.stages # => basecrm.StagesService
 
-Actions: \* Retrieve all stages - ``client.stages.list``
+Actions:
+
+* Retrieve all stages - ``client.stages.list``
 
 Tag
 ~~~
@@ -304,10 +326,13 @@ Tag
     client = basecrm.Client(access_token='<YOUR_PERSONAL_ACCESS_TOKEN>')
     client.tags # => basecrm.TagsService
 
-Actions: \* Retrieve all tags - ``client.tags.list`` \* Create a tag -
-``client.tags.create`` \* Retrieve a single tag -
-``client.tags.retrieve`` \* Update a tag - ``client.tags.update`` \*
-Delete a tag - ``client.tags.destroy``
+Actions:
+
+* Retrieve all tags - ``client.tags.list``
+* Create a tag - ``client.tags.create``
+* Retrieve a single tag - ``client.tags.retrieve``
+* Update a tag - ``client.tags.update``
+* Delete a tag - ``client.tags.destroy``
 
 Task
 ~~~~
@@ -317,10 +342,13 @@ Task
     client = basecrm.Client(access_token='<YOUR_PERSONAL_ACCESS_TOKEN>')
     client.tasks # => basecrm.TasksService
 
-Actions: \* Retrieve all tasks - ``client.tasks.list`` \* Create a task
-- ``client.tasks.create`` \* Retrieve a single task -
-``client.tasks.retrieve`` \* Update a task - ``client.tasks.update`` \*
-Delete a task - ``client.tasks.destroy``
+Actions:
+
+* Retrieve all tasks - ``client.tasks.list``
+* Create a task - ``client.tasks.create``
+* Retrieve a single task - ``client.tasks.retrieve``
+* Update a task - ``client.tasks.update``
+* Delete a task - ``client.tasks.destroy``
 
 User
 ~~~~
@@ -330,9 +358,11 @@ User
     client = basecrm.Client(access_token='<YOUR_PERSONAL_ACCESS_TOKEN>')
     client.users # => basecrm.UsersService
 
-Actions: \* Retrieve all users - ``client.users.list`` \* Retrieve a
-single user - ``client.users.retrieve`` \* Retrieve an authenticating
-user - ``client.users.self``
+Actions:
+
+* Retrieve all users - ``client.users.list``
+* Retrieve a single user - ``client.users.retrieve``
+* Retrieve an authenticating user - ``client.users.self``
 
 Tests
 -----
