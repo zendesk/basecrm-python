@@ -1,31 +1,17 @@
 import os
 from setuptools import setup
 
-def read_file(name):
-    """
-    Read file content
-    """
-    f = open(name)
-    try:
-        return f.read()
-    except IOError:
-        print("could not read %r" % name)
-        f.close()
+README = open(os.path.join(os.path.dirname(__file__), 'README.rst')).read()
 
+# allow setup.py to be run from any path
+os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
-def long_description():
-    content = read_file('README.md')
-    try:
-        import pypandoc
-        return pypandoc.convert(content, 'rst', format='md')
-    except ImportError:
-        return content
 
 setup(
     name='basecrm',
     version='1.0.3',
     description='BaseCRM Official API V2 library client for Python',
-    long_description=long_description(),
+    long_description=README,
     author='BaseCRM developers',
     author_email='developers@getbase.com',
     url='https://github.com/basecrm/basecrm-python',
