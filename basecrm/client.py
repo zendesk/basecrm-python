@@ -1,6 +1,7 @@
 from basecrm.configuration import Configuration
 from basecrm.http_client import HttpClient
 import basecrm.services
+import basecrm.sync
 
 
 class Client(object):
@@ -23,7 +24,7 @@ class Client(object):
           >>> client = basecrm.Client(access_token=os.environ.get('BASECRM_ACCESS_TOKEN'))
           <basecrm.Client>
 
-        
+
         :param str access_token: Personal access token.
         :param str base_url: (optional) Base url for the api. Default: ``https://api.getbase.com``.
         :param str user_agent: (optional) Client user agent. Default: ``BaseCRM/v2 Python/{basecrm.VERSION}``.
@@ -56,6 +57,7 @@ class Client(object):
         self.__tasks = basecrm.services.TasksService(self.http_client)
         self.__users = basecrm.services.UsersService(self.http_client)
 
+        self.__sync = basecrm.sync.SyncService(self.http_client)
 
     @property
     def accounts(self):
@@ -158,5 +160,13 @@ class Client(object):
         """
         :return: :class:`UsersService <basecrm.UsersService>` object that gives you an access to all User related actions.
         :rtype: basecrm.UsersService
+        """
+        return self.__users
+
+    @property
+    def sync(self):
+        """
+        :return: :class:`SyncService <basecrm.SyncService>` object that gives you an access to all low-level Sync API  related actions.
+        :rtype: basecrm.SyncService
         """
         return self.__users
