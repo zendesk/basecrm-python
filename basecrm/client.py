@@ -169,4 +169,4 @@ class Client(object):
         :return: :class:`SyncService <basecrm.SyncService>` object that gives you an access to all low-level Sync API  related actions.
         :rtype: basecrm.SyncService
         """
-        return self.__users
+        return self.__sync
