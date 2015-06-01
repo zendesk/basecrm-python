@@ -123,7 +123,7 @@ class Sync(object):
 
             >>> client = basecrm.Client(access_token='<YOUR_PERSONAL_ACCESS_TOKEN>')
             >>> sync = basecrm.Sync(client=client, device_uuid='<YOUR_DEVICES_UUID>')
-            >>> sync.fetch(lambda meta, data: return basecrm.Sync.ACK)
+            >>> sync.fetch(lambda meta, data: basecrm.Sync.ACK)
 
         :param callback: Callback that will be called for every item in a queue.
             Takes two input arguments: synchronization meta data and assodicated data.
