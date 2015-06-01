@@ -99,6 +99,10 @@ class HttpClient(object):
         :raises ServerError: if Base CRM backend servers encounterered an unexpected condition.
         :return: Tuple of three elements: (http status code, headers, response - either parsed json or plain text)
         :rtype: tuple
+
+        :Keyword Arguments:
+            * :param dict headers: (optional) Dictionary of headers. Default: ``{}``.
+            * :param bool raw: (optional) Whether to wrap and uwrap the envelope. Default: ``False``.
         """
 
         url = "{base_url}{version}{resource}".format(base_url=self.config.base_url,
@@ -110,9 +114,18 @@ class HttpClient(object):
             'User-Agent': self.config.user_agent,
         }
 
+        user_headers = {}
+        if  'headers' in kwargs and isinstance(kwargs['headers'], dict):
+            user_headers = kwargs['headers']
+
+        headers.update(user_headers)
+
+        raw = bool(kwargs['raw']) if 'raw' in kwargs else False
+
         if body is not None:
             headers['Content-Type'] = 'application/json'
-            body = json.dumps(self.wrap_envelope(body))
+            payload = body if raw else self.wrap_envelope(body)
+            body = json.dumps(payload)
 
         resp = requests.request(method, url,
                                 params=params,
@@ -125,7 +138,7 @@ class HttpClient(object):
             self.handle_error_response(resp)
 
         if 'Content-Type' in resp.headers and 'json' in resp.headers['Content-Type']:
-            resp_body = self.unwrap_envelope(resp.json())
+            resp_body = resp.json() if raw else self.unwrap_envelope(resp.json())
         else:
             resp_body = resp.content
 
