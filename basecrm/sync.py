@@ -98,7 +98,7 @@ class Sync(object):
     """
     NACK = False
 
-    def __initialize__(self, client, device_uuid):
+    def __init__(self, client, device_uuid):
         """
         :param :class:`basecrm.Client` client: BaseCRM API v2 client instance.
         :param string device_uuid: Device's UUID for which to perform synchronization.

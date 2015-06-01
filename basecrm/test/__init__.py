@@ -18,8 +18,9 @@ def all():
         'tags_service',
         'tasks_service',
         'users_service',
+        'sync',
+        'sync_service',
     ]
     module_names = ['basecrm.test.test_' + name for name in names]
     loader = unittest.TestLoader()
     return loader.loadTestsFromNames(module_names)
-
