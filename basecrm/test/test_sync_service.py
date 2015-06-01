@@ -1,5 +1,9 @@
 import munch
-import mock
+
+try:
+    from unittest import mock
+except ImportError:
+    import mock
 
 import basecrm
 from basecrm.test.testutils import BaseTestCase
