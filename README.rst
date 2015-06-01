@@ -166,6 +166,33 @@ Sample below shows how to properly handle exceptions:
         # Other kind of exceptioni, probably connectivity related
         pass
 
+Sync API
+---------------------
+
+The following sample code shows how to perform a full synchronization flow using high-level wrapper.
+
+First of all you need an instance of ``basecrm.Client``. High-level ``basecrm.Sync`` wrapper uses ``basecrm.SyncService`` to interact with the Sync API.
+In addition to the client instance, you must provide a device’s UUID within ``device_uuid`` parameter. The device’s UUID must not change between synchronization sessions, otherwise the sync service will not recognize the device and will send all the data again.
+
+.. code:: python
+
+    client = basecrmClient(access_token='<YOUR_PERSONAL_ACCESS_TOKEN>')
+    sync = basecrm.Sync(client=client, device_uuid='<YOUR_DEVICES_UUID')
+
+Now all you have to do is to call ``fetch`` method and pass a lambda or function that you might use to store fetched data to a database.
+
+.. code:: python
+ 
+    def synchronize(meta, data):
+      result =  DAO.execute(table=meta.type,
+                            statement=meta.sync.event_type,
+                            properties=data)
+      return basecrm.Sync.ACK if result else basecrm.sync.NACK
+      
+    sync.fetch(synchronize)
+
+Notice that you must return either ``basecrm.Sync.ACK`` or ``basecrm.Sync.NACK``.
+
 Resources and actions
 ---------------------
 
