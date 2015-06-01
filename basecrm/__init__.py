@@ -9,7 +9,7 @@ Usage::
   >>> client = basecrm.Client(access_token=os.environ.get('BASECRM_ACCESS_TOKEN')
   >>> coffeeshop = client.contacts.create(name='Coffee Shop', is_organization=True)
   >>> chemex = client.deals.create(name='Chemex', contact_id=coffeeshop.id, value=99, currency='USD')
-  >>> print chemex.hot 
+  >>> print chemex.hot
 
 :copyright: (c) 2015 by BaseCRM developers (developers@getbase.com).
 :license: MIT, see LICENSE for more details.
@@ -42,6 +42,11 @@ from basecrm.services import (
     TagsService,
     TasksService,
     UsersService,
+)
+
+from basecrm.sync import (
+    SyncService,
+    Sync
 )
 
 from basecrm.client import Client
