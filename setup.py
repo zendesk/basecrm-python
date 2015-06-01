@@ -19,6 +19,7 @@ setup(
     packages=['basecrm', 'basecrm.test'],
     test_suite='basecrm.test.all',
     install_requires=['requests', 'munch'],
+    tests_require=['mock'],
     use_2to3=True,
     classifiers=[
         "Development Status :: 5 - Production/Stable",
