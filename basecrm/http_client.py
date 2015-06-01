@@ -138,7 +138,7 @@ class HttpClient(object):
             self.handle_error_response(resp)
 
         if 'Content-Type' in resp.headers and 'json' in resp.headers['Content-Type']:
-            resp_body = resp.json() if raw else self.unwrap_envelope(resp.json())
+            resp_body = munchify(resp.json()) if raw else self.unwrap_envelope(resp.json())
         else:
             resp_body = resp.content
 
