@@ -373,7 +373,7 @@ class LeadsService(object):
     """
     Allowed attributes for Lead to send to Base CRM backend servers.
     """
-    OPTS_KEYS_TO_PERSIST = ['address', 'custom_fields', 'description', 'email', 'facebook', 'fax', 'first_name', 'industry', 'last_name', 'linkedin', 'mobile', 'organization_name', 'owner_id', 'phone', 'skype', 'status', 'tags', 'title', 'twitter', 'website']
+    OPTS_KEYS_TO_PERSIST = ['address', 'custom_fields', 'description', 'email', 'facebook', 'fax', 'first_name', 'industry', 'last_name', 'linkedin', 'mobile', 'organization_name', 'owner_id', 'phone', 'skype', 'source_id', 'status', 'tags', 'title', 'twitter', 'website']
 
     def __init__(self, http_client):
         """
