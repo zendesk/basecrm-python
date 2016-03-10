@@ -1,5 +1,12 @@
 ## CHANGELOG
 
+### v1.1.1 (2016-02-10)
+
+**Features and Improvements**
+
+* Allow to update `source_id` on leads [#6](https://github.com/basecrm/basecrm-python/pull/6)
+* Allow to update `estimated_close_date` on deals [#7](https://github.com/basecrm/basecrm-python/pull/7)
+
 ### v1.1.0 (2015-06-01)
 
 **Features and Improvements**
