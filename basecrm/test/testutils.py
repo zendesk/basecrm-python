@@ -232,3 +232,16 @@ class BaseTestCase(unittest.TestCase, UnittestCompat):
 
         return task;
 
+    def create_deal_with_decimal_value(self, **attributes):
+        deal = {
+            'currency': "EUR",
+            'hot': True,
+            'name': 'Website Redesign' +  rand(),
+            'tags': ["important"],
+            'value': '11.12',
+            'contact_id': self.create_contact().id,
+        }
+        deal.update(attributes)
+        deal = self.client.deals.create(**deal);
+
+        return deal;

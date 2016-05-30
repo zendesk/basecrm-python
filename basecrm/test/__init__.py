@@ -5,6 +5,7 @@ import unittest
 def all():
     names = [
         'http_client',
+        'decimal_deal_values',
         'accounts_service',
         'associated_contacts_service',
         'contacts_service',
