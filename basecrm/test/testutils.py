@@ -96,6 +96,10 @@ class BaseTestCase(unittest.TestCase, UnittestCompat):
         return self.client.users.self()
 
 
+    @lazyproperty
+    def product(self):
+        return self.create_product()
+
     def create_associated_contact(self, **attributes):
         deal_id = self.create_deal().id;
         associated_contact = {
@@ -231,4 +235,21 @@ class BaseTestCase(unittest.TestCase, UnittestCompat):
         task = self.client.tasks.create(**task);
 
         return task;
+
+    def create_product(self, **attributes):
+        product = {
+            'name': 'Enterprise Plan' +  rand(),
+            'description': "Includes more storage options",
+            'sku': "enterprise-plan",
+            'active': True,
+            'max_discount': 4,
+            'max_markup': 4,
+            'cost': 2,
+            'cost_currency': "USD",
+            'prices': [{"amount": "1599.99", "currency":"USD"}, {"amount":"3599.99", "currency":"PLN"}],
+        }
+        product.update(attributes)
+        product = self.client.products.create(**product);
+
+        return product;
 

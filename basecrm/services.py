@@ -1241,3 +1241,127 @@ class UsersService(object):
 
         _, _, resource = self.http_client.get("/users/self")
         return resource
+
+class ProductsService(object):
+    """
+    :class:`basecrm.ProductsService` is used by :class:`basecrm.Client` to make
+    actions related to Product resource. 
+
+    Normally you won't instantiate this class directly.
+    """
+
+    """
+    Allowed attributes for Product to send to Base CRM backend servers.
+    """
+    OPTS_KEYS_TO_PERSIST = ['name', 'sku', 'active', 'cost', 'cost_currency', 'prices']
+
+    def __init__(self, http_client):
+        """
+        :param :class:`basecrm.HttpClient` http_client: Pre configured high-level http client.
+        """
+
+        self.__http_client = http_client
+
+    @property
+    def http_client(self):
+        return self.__http_client
+
+
+    def list(self, **params):
+        """
+        Retrieve all products
+
+        Returns all products available to the user according to the parameters provided
+
+        :calls: ``get /products``
+        :param dict params: (optional) Search options.
+        :return: List of dictionaries that support attriubte-style access, which represent collection of Products.
+        :rtype: list
+        """
+
+        _, _, products = self.http_client.get("/products", params=params)
+        return products
+
+    def create(self, *args, **kwargs):
+        """
+        Create a product
+
+        Create a new product
+
+        :calls: ``post /products``
+        :param tuple *args: (optional) Single object representing Product resource.
+        :param dict **kwargs: (optional) Product attributes.
+        :return: Dictionary that support attriubte-style access and represents newely created Product resource.
+        :rtype: dict
+        """
+
+        if not args and not kwargs:
+            raise Exception('attributes for Product are missing')
+
+        attributes = args[0] if args else kwargs
+        attributes = dict((k, v) for k, v in attributes.iteritems() if k in self.OPTS_KEYS_TO_PERSIST)
+
+        _, _, product = self.http_client.post("/products", body=attributes)
+        return product
+
+    def retrieve(self, id) :
+        """
+        Retrieve a single product
+
+        Returns a single product, according to the unique product ID provided
+        If the specified product does not exist, the request will return an error
+
+        :calls: ``get /products/{id}``
+        :param int id: Unique identifier of a Product.
+        :return: Dictionary that support attriubte-style access and represent Product resource.
+        :rtype: dict
+        """
+
+        _, _, product = self.http_client.get("/products/{id}".format(id=id))
+        return product
+
+    def update(self, id, *args, **kwargs):
+        """
+        Update a product
+
+        Updates product information
+        If the specified product does not exist, the request will return an error
+        <figure class="notice"><p>In order to modify prices used on a record, you need to supply the entire set
+        <code>prices</code> are replaced every time they are used in a request
+        </p></figure>
+
+        :calls: ``put /products/{id}``
+        :param int id: Unique identifier of a Product.
+        :param tuple *args: (optional) Single object representing Product resource which attributes should be updated.
+        :param dict **kwargs: (optional) Product attributes to update.
+        :return: Dictionary that support attriubte-style access and represents updated Product resource.
+        :rtype: dict
+        """
+
+        if not args and not kwargs:
+            raise Exception('attributes for Product are missing')
+
+        attributes = args[0] if args else kwargs
+        attributes = dict((k, v) for k, v in attributes.iteritems() if k in self.OPTS_KEYS_TO_PERSIST)
+
+        _, _, product = self.http_client.put("/products/{id}".format(id=id), body=attributes)
+        return product
+
+    def destroy(self, id) :
+        """
+        Delete a product
+
+        Delete an existing product from the catalog
+        Existing orders and line items are not affected
+        If the specified product does not exist, the request will return an error
+        This operation cannot be undone
+        Products can be removed only by an account administrator
+
+        :calls: ``delete /products/{id}``
+        :param int id: Unique identifier of a Product.
+        :return: True if the operation succeeded.
+        :rtype: bool 
+        """
+
+        status_code, _, _ = self.http_client.delete("/products/{id}".format(id=id))
+        return status_code == 204

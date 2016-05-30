@@ -42,6 +42,7 @@ from basecrm.services import (
     TagsService,
     TasksService,
     UsersService,
+    ProductsService,
 )
 
 from basecrm.sync import (

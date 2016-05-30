@@ -56,6 +56,7 @@ class Client(object):
         self.__tags = basecrm.services.TagsService(self.http_client)
         self.__tasks = basecrm.services.TasksService(self.http_client)
         self.__users = basecrm.services.UsersService(self.http_client)
+        self.__products = basecrm.services.ProductsService(self.http_client)
 
         self.__sync = basecrm.sync.SyncService(self.http_client)
 
@@ -162,6 +163,14 @@ class Client(object):
         :rtype: basecrm.UsersService
         """
         return self.__users
+
+    @property
+    def products(self):
+        """
+        :return: :class:`ProductsService <basecrm.ProductsService>` object that gives you an access to all Product related actions.
+        :rtype: basecrm.ProductsService
+        """
+        return self.__products
 
     @property
     def sync(self):
