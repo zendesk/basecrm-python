@@ -18,6 +18,7 @@ def all():
         'tags_service',
         'tasks_service',
         'users_service',
+        'products_service',
         'sync',
         'sync_service',
     ]
