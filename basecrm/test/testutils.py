@@ -34,6 +34,7 @@ class BaseTestCase(unittest.TestCase, UnittestCompat):
     @lazyproperty
     def client(self):
         return basecrm.Client(access_token=self.access_token,
+                              base_url=self.base_url,
                               user_agent=self.user_agent,
                               verbose=True)
 
@@ -47,6 +48,11 @@ class BaseTestCase(unittest.TestCase, UnittestCompat):
         if token is None:
             raise Exception("'BASECRM_ACCESS_TOKEN' environment variable has not been found.")
         return token
+
+    @property
+    def base_url(self):
+        url = os.environ.get('BASECRM_BASE_URL')
+        return url or "https://api.getbase.com"
 
     @lazyproperty
     def account(self):
