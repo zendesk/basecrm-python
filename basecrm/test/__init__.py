@@ -5,7 +5,6 @@ import unittest
 def all():
     names = [
         'http_client',
-        'decimal_deal_values',
         'accounts_service',
         'associated_contacts_service',
         'contacts_service',
@@ -21,6 +20,7 @@ def all():
         'users_service',
         'sync',
         'sync_service',
+        'coercion'
     ]
     module_names = ['basecrm.test.test_' + name for name in names]
     loader = unittest.TestLoader()

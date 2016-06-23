@@ -12,4 +12,4 @@ class Coercion(object):
 
         :param str value: a value to be coerced
         """
-        return Decimal(value)
+        return Decimal(str(value))

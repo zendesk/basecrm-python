@@ -1,5 +1,12 @@
 ## CHANGELOG
 
+### v1.2.0 (2016-07-24)
+
+**Features and Improvements**
+
+* Add decimal deal value support [#9](https://github.com/basecrm/basecrm-python/pull/9)
+* Deal values are now a Decimal [#9](https://github.com/basecrm/basecrm-python/pull/9)
+
 ### v1.1.1 (2016-02-10)
 
 **Features and Improvements**
