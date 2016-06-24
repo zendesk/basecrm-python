@@ -20,6 +20,7 @@ def all():
         'users_service',
         'sync',
         'sync_service',
+        'coercion'
     ]
     module_names = ['basecrm.test.test_' + name for name in names]
     loader = unittest.TestLoader()

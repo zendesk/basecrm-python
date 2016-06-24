@@ -1,5 +1,8 @@
 #  WARNING: This code is auto-generated from the BaseCRM API Discovery JSON Schema
 
+from decimal import *
+from coercion import Coercion
+
 class AccountsService(object):
     """
     :class:`basecrm.AccountsService` is used by :class:`basecrm.Client` to make
@@ -277,6 +280,9 @@ class DealsService(object):
         """
 
         _, _, deals = self.http_client.get("/deals", params=params)
+        for deal in deals:
+            deal['value'] = Coercion.to_decimal(deal['value'])
+
         return deals
 
     def create(self, *args, **kwargs):
@@ -299,6 +305,7 @@ class DealsService(object):
         attributes = dict((k, v) for k, v in attributes.iteritems() if k in self.OPTS_KEYS_TO_PERSIST)
 
         _, _, deal = self.http_client.post("/deals", body=attributes)
+        deal["value"] = Coercion.to_decimal(deal["value"])
         return deal
 
     def retrieve(self, id) :
@@ -315,6 +322,7 @@ class DealsService(object):
         """
 
         _, _, deal = self.http_client.get("/deals/{id}".format(id=id))
+        deal["value"] = Coercion.to_decimal(deal["value"])
         return deal
 
     def update(self, id, *args, **kwargs):
@@ -343,6 +351,7 @@ class DealsService(object):
         attributes = dict((k, v) for k, v in attributes.iteritems() if k in self.OPTS_KEYS_TO_PERSIST)
 
         _, _, deal = self.http_client.put("/deals/{id}".format(id=id), body=attributes)
+        deal["value"] = Coercion.to_decimal(deal["value"])
         return deal
 
     def destroy(self, id) :

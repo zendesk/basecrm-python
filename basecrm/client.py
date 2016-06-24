@@ -1,5 +1,6 @@
 from basecrm.configuration import Configuration
 from basecrm.http_client import HttpClient
+
 import basecrm.services
 import basecrm.sync
 
@@ -11,7 +12,7 @@ class Client(object):
     :attribute :class:`Configuration <basecrm.Configuration>` config: Current Base CRM client configuration.
     :attribute :class:`HttpClient <basecrm.HttpClient>` http_client: Http client.
 
-    :copyright: (c) 2015 by BaseCRM developers (developers@getbase.com).
+    :copyright: (c) 2016 by BaseCRM developers (developers@getbase.com).
     :license: MIT, see LICENSE for more details.
     """
 

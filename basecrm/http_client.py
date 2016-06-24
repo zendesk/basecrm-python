@@ -3,8 +3,15 @@ import json
 
 
 from munch import munchify
+from decimal import *
 
 from basecrm.errors import RateLimitError, RequestError, ResourceError, ServerError
+
+class DecimalEncoder(json.JSONEncoder):
+    def default(self, o):
+        if isinstance(o, Decimal):
+            return float(o)
+        super(DecimalEncoder, self).default(o)
 
 
 class HttpClient(object):
@@ -125,7 +132,7 @@ class HttpClient(object):
         if body is not None:
             headers['Content-Type'] = 'application/json'
             payload = body if raw else self.wrap_envelope(body)
-            body = json.dumps(payload)
+            body = json.dumps(self.wrap_envelope(body), cls=DecimalEncoder)
 
         resp = requests.request(method, url,
                                 params=params,

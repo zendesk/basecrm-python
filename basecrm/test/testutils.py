@@ -1,6 +1,7 @@
 import unittest
 import os
 import random
+import munch
 
 import basecrm
 
@@ -238,3 +239,24 @@ class BaseTestCase(unittest.TestCase, UnittestCompat):
 
         return task;
 
+    def create_deal_with_decimal_value(self, **attributes):
+        deal = {
+            'id': rand(),
+            'currency': "EUR",
+            'hot': True,
+            'name': 'Website Redesign' +  rand(),
+            'tags': ["important"],
+            'value': '11.12',
+            'contact_id': self.create_contact().id,
+        }
+        deal.update(attributes)
+
+        client = self.client
+        original_request_func = client.http_client.request
+        client.http_client.request = lambda *args, **kwargs: (200, {}, munch.Munch(deal))
+
+        deal = self.client.deals.create(**deal);
+
+        client.http_client.request = original_request_func
+
+        return deal;
