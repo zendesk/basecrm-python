@@ -257,6 +257,22 @@ Actions:
 * Update a deal - ``client.deals.update``
 * Delete a deal - ``client.deals.destroy``
 
+**A note about deal value**
+
+It is prefered to use decimal from string or directly string for deal values when creating or modifying a deal. This guarantees correct precision
+
+.. code:: python
+
+    deal.value = decimal("1000.99")
+    deal.value = "1000.00"
+
+You should not be using floats or decimal constructed from floats as it may result in precision loss.
+
+.. code:: python
+
+    deal.value = 1000.99
+    deal.value = decimal(1000.99)
+
 Lead
 ~~~~
 
