@@ -13,3 +13,12 @@ class Coercion(object):
         :param str value: a value to be coerced
         """
         return Decimal(str(value))
+
+    @staticmethod
+    def to_string(value):
+        """
+        Coerce a value into a String
+
+        :param float value: a value to be coerced
+        """
+        return str(value)
