@@ -102,7 +102,7 @@ want to create a new deal you will call:
     client = basecrm.Client(access_token='<YOUR_PERSONAL_ACCESS_TOKEN>')
     deal = client.deals.create(name='Website redesign', contact_id=coffeeshop.id)
 
-    deal.value = 1000
+    deal.value = Decimal("1000.99")
     deal.currency = 'USD'
 
     client.deals.update(deal.id, deal)
@@ -263,7 +263,7 @@ It is prefered to use decimal from string or directly string for deal values whe
 
 .. code:: python
 
-    deal.value = decimal("1000.99")
+    deal.value = Decimal("1000.99")
     deal.value = "1000.00"
 
 You should not be using floats or decimal constructed from floats as it may result in precision loss.
