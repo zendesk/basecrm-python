@@ -47,12 +47,12 @@ class Configuration(object):
                                      '"basecrm.Client(access_token= <YOUR_PERSONAL_ACCESS_TOKEN>)"')
 
         if re.search(r'\s', self.access_token):
-            raise ConfigurationError('Pvoided access token is invalid '
+            raise ConfigurationError('Provided access token is invalid '
                                      'as it contains disallowed characters. '
                                      'Please double-check you access token.')
 
         if len(self.access_token) != 64:
-            raise ConfigurationError('Provieded access token is invalid '
+            raise ConfigurationError('Provided access token is invalid '
                                      'as it has invalid length. '
                                      'Please double-check your access token.')
 
