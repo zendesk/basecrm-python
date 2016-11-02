@@ -1,5 +1,11 @@
 ## CHANGELOG
 
+### v1.2.1 (2016-11-02)
+
+**Fixes**
+
+* missing source_id field for Leads added (IR-2944)
+
 ### v1.2.0 (2016-07-24)
 
 **Features and Improvements**

@@ -9,7 +9,7 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='basecrm',
-    version='1.2.0',
+    version='1.2.1',
     description='BaseCRM Official API V2 library client for Python',
     long_description=README,
     author='BaseCRM developers',
