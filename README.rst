@@ -86,7 +86,14 @@ method:
     client = basecrm.Client(access_token='<YOUR_PERSONAL_ACCESS_TOKEN>')
     client.deals.list(organization_id=google.id, hot=True) # list(dict|Munch)
 
-To find a resource by it's unique identifier use ``#retrieve`` method:
+To find custom field by name and its value pass kwargs as an argument:
+
+.. code:: python
+
+    client = basecrm.Client(access_token='<YOUR_PERSONAL_ACCESS_TOKEN>')
+    client.deals.list(**{'custom_fields[name]': 1})
+
+To find a resource by its unique identifier use ``#retrieve`` method:
 
 .. code:: python
 
