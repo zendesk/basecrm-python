@@ -1,5 +1,11 @@
 ## CHANGELOG
 
+### v1.2.2 (2016-11-28)
+
+**Fixes**
+
+* Fix DealsService create() & update() to work when no 'value' field is provided [#15](https://github.com/basecrm/basecrm-python/pull/15)
+
 ### v1.2.1 (2016-11-02)
 
 **Fixes**
