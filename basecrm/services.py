@@ -304,7 +304,8 @@ class DealsService(object):
         attributes = args[0] if args else kwargs
         attributes = dict((k, v) for k, v in attributes.iteritems() if k in self.OPTS_KEYS_TO_PERSIST)
 
-        attributes["value"] = Coercion.to_string(attributes["value"])
+        if "value" in attributes:
+            attributes["value"] = Coercion.to_string(attributes["value"])
         _, _, deal = self.http_client.post("/deals", body=attributes)
         deal["value"] = Coercion.to_decimal(deal["value"])
         return deal
@@ -350,7 +351,8 @@ class DealsService(object):
 
         attributes = args[0] if args else kwargs
         attributes = dict((k, v) for k, v in attributes.iteritems() if k in self.OPTS_KEYS_TO_PERSIST)
-        attributes["value"] = Coercion.to_string(attributes["value"])
+        if "value" in attributes:
+            attributes["value"] = Coercion.to_string(attributes["value"])
 
         _, _, deal = self.http_client.put("/deals/{id}".format(id=id), body=attributes)
         deal["value"] = Coercion.to_decimal(deal["value"])
