@@ -1,4 +1,5 @@
 """
 Current client version.
 """
-VERSION = '1.2.2'
+import pkg_resources
+VERSION = pkg_resources.get_distribution("basecrm").version
