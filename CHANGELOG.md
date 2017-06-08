@@ -1,5 +1,11 @@
 ## CHANGELOG
 
+### v1.2.3 (2017-06-08)
+
+**Fixes**
+
+* Handle ValueError in httpclient [#19](https://github.com/basecrm/basecrm-python/pull/19)
+
 ### v1.2.2 (2016-11-28)
 
 **Fixes**
