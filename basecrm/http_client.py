@@ -154,11 +154,9 @@ class HttpClient(object):
     def handle_error_response(self, resp):
         try:
             errors = resp.json()
-        except:
-            raise Exception('Unknown HTTP error response. Json expected. '
-                            'HTTP response code={0}. '
-                            'HTTP response body={1}'.format(resp.status_code,
-                                                            resp.text))
+        except ValueError:
+            errors = {'errors':[], 'meta':{'logref':''}}
+
         resp_code = resp.status_code
         if resp_code == 422:
             raise ResourceError(resp_code, errors)
