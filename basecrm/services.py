@@ -907,6 +907,131 @@ class SourcesService(object):
         status_code, _, _ = self.http_client.delete("/sources/{id}".format(id=id))
         return status_code == 204
 
+class LeadSourcesService(object):
+    """
+    :class:`basecrm.LeadSourcesService` is used by :class:`basecrm.Client` to make
+    actions related to LeadSource resource.
+
+    Normally you won't instantiate this class directly.
+    """
+
+    """
+    Allowed attributes for Source to send to Base CRM backend servers.
+    """
+    OPTS_KEYS_TO_PERSIST = ['name']
+
+    def __init__(self, http_client):
+        """
+        :param :class:`basecrm.HttpClient` http_client: Pre configured high-level http client.
+        """
+
+        self.__http_client = http_client
+
+    @property
+    def http_client(self):
+        return self.__http_client
+
+
+    def list(self, **params):
+        """
+        Retrieve all lead sources
+
+        Returns all lead sources available to the user according to the parameters provided
+
+        :calls: ``get /lead_sources``
+        :param dict params: (optional) Search options.
+        :return: List of dictionaries that support attriubte-style access, which represent collection of Sources.
+        :rtype: list
+        """
+
+        _, _, sources = self.http_client.get("/lead_sources", params=params)
+        return sources
+
+    def create(self, *args, **kwargs):
+        """
+        Create a source
+
+        Creates a new source
+        <figure class="notice">
+        Source's name **must** be unique
+        </figure>
+
+        :calls: ``post /lead_sources``
+        :param tuple *args: (optional) Single object representing Source resource.
+        :param dict **kwargs: (optional) Source attributes.
+        :return: Dictionary that support attriubte-style access and represents newely created Source resource.
+        :rtype: dict
+        """
+
+        if not args and not kwargs:
+            raise Exception('attributes for Source are missing')
+
+        attributes = args[0] if args else kwargs
+        attributes = dict((k, v) for k, v in attributes.iteritems() if k in self.OPTS_KEYS_TO_PERSIST)
+
+        _, _, source = self.http_client.post("/lead_sources", body=attributes)
+        return source
+
+    def retrieve(self, id) :
+        """
+        Retrieve a single source
+
+        Returns a single source available to the user by the provided id
+        If a source with the supplied unique identifier does not exist it returns an error
+
+        :calls: ``get /lead_sources/{id}``
+        :param int id: Unique identifier of a Source.
+        :return: Dictionary that support attriubte-style access and represent Source resource.
+        :rtype: dict
+        """
+
+        _, _, source = self.http_client.get("/lead_sources/{id}".format(id=id))
+        return source
+
+    def update(self, id, *args, **kwargs):
+        """
+        Update a source
+
+        Updates source information
+        If the specified source does not exist, the request will return an error
+        <figure class="notice">
+        If you want to update a source, you **must** make sure source's name is unique
+        </figure>
+
+        :calls: ``put /lead_sources/{id}``
+        :param int id: Unique identifier of a Source.
+        :param tuple *args: (optional) Single object representing Source resource which attributes should be updated.
+        :param dict **kwargs: (optional) Source attributes to update.
+        :return: Dictionary that support attriubte-style access and represents updated Source resource.
+        :rtype: dict
+        """
+
+        if not args and not kwargs:
+            raise Exception('attributes for Source are missing')
+
+        attributes = args[0] if args else kwargs
+        attributes = dict((k, v) for k, v in attributes.iteritems() if k in self.OPTS_KEYS_TO_PERSIST)
+
+        _, _, source = self.http_client.put("/lead_sources/{id}".format(id=id), body=attributes)
+        return source
+
+    def destroy(self, id) :
+        """
+        Delete a source
+
+        Delete an existing source
+        If the specified source does not exist, the request will return an error
+        This operation cannot be undone
+
+        :calls: ``delete /lead_sources/{id}``
+        :param int id: Unique identifier of a Source.
+        :return: True if the operation succeeded.
+        :rtype: bool
+        """
+
+        status_code, _, _ = self.http_client.delete("/lead_sources/{id}".format(id=id))
+        return status_code == 204
+
 class StagesService(object):
     """
     :class:`basecrm.StagesService` is used by :class:`basecrm.Client` to make
