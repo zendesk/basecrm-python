@@ -356,6 +356,22 @@ Actions:
 * Update a source - ``client.sources.update``
 * Delete a source - ``client.sources.destroy``
 
+Lead Source
+~~~~~~~~~~~
+
+.. code:: python
+
+    client = basecrm.Client(access_token='<YOUR_PERSONAL_ACCESS_TOKEN>')
+    client.lead_sources # => basecrm.LeadSourcesService
+
+Actions:
+
+* Retrieve all sources - ``client.lead_sources.list``
+* Create a source - ``client.lead_sources.create``
+* Retrieve a single source - ``client.lead_sources.retrieve``
+* Update a source - ``client.lead_sources.update``
+* Delete a source - ``client.lead_sources.destroy``
+
 Stage
 ~~~~~
 

@@ -89,6 +89,9 @@ class BaseTestCase(unittest.TestCase, UnittestCompat):
     def source(self):
         return self.create_source()
 
+    @lazyproperty
+    def lead_source(self):
+        return self.create_lead_source()
 
     @lazyproperty
     def tag(self):
@@ -211,6 +214,15 @@ class BaseTestCase(unittest.TestCase, UnittestCompat):
         }
         source.update(attributes)
         source = self.client.sources.create(**source);
+
+        return source;
+
+    def create_lead_source(self, **attributes):
+        source = {
+            'name': 'Word of mouth' +  rand(),
+        }
+        source.update(attributes)
+        source = self.client.lead_sources.create(**source);
 
         return source;
 

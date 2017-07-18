@@ -53,6 +53,7 @@ class Client(object):
         self.__notes = basecrm.services.NotesService(self.http_client)
         self.__pipelines = basecrm.services.PipelinesService(self.http_client)
         self.__sources = basecrm.services.SourcesService(self.http_client)
+        self.__lead_sources = basecrm.services.LeadSourcesService(self.http_client)
         self.__stages = basecrm.services.StagesService(self.http_client)
         self.__tags = basecrm.services.TagsService(self.http_client)
         self.__tasks = basecrm.services.TasksService(self.http_client)
@@ -131,6 +132,14 @@ class Client(object):
         :rtype: basecrm.SourcesService
         """
         return self.__sources
+
+    @property
+    def lead_sources(self):
+        """
+        :return: :class:`LeadSourcesService <basecrm.LeadSourcesService>` object that gives you an access to all Source related actions.
+        :rtype: basecrm.LeadSourcesService
+        """
+        return self.__lead_sources
 
     @property
     def stages(self):
