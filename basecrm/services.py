@@ -400,7 +400,7 @@ class LeadsService(object):
         return self.__http_client
 
 
-    def list(self, **params):
+    def list(self, params=None, **kwargs):
         """
         Retrieve all leads
 
@@ -412,7 +412,7 @@ class LeadsService(object):
         :rtype: list
         """
 
-        _, _, leads = self.http_client.get("/leads", params=params)
+        _, _, leads = self.http_client.get("/leads", params=params, **kwargs)
         return leads
 
     def create(self, *args, **kwargs):
