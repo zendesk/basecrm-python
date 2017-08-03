@@ -1211,7 +1211,7 @@ class UsersService(object):
         return self.__http_client
 
 
-    def list(self, **params):
+    def list(self, params=None, **kwargs):
         """
         Retrieve all users
 
@@ -1223,7 +1223,7 @@ class UsersService(object):
         :rtype: list
         """
 
-        _, _, users = self.http_client.get("/users", params=params)
+        _, _, users = self.http_client.get("/users", params=params, **kwargs)
         return users
 
     def retrieve(self, id) :
