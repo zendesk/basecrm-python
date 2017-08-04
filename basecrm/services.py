@@ -267,7 +267,7 @@ class DealsService(object):
         return self.__http_client
 
 
-    def list(self, **params):
+    def list(self, params=None, **kwargs):
         """
         Retrieve all deals
 
@@ -279,7 +279,7 @@ class DealsService(object):
         :rtype: list
         """
 
-        _, _, deals = self.http_client.get("/deals", params=params)
+        _, _, deals = self.http_client.get("/deals", params=params, **kwargs)
         for deal in deals:
             deal['value'] = Coercion.to_decimal(deal['value'])
 
