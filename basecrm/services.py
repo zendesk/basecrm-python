@@ -145,7 +145,7 @@ class ContactsService(object):
         return self.__http_client
 
 
-    def list(self, **params):
+    def list(self, params=None, **kwargs):
         """
         Retrieve all contacts
 
@@ -157,7 +157,7 @@ class ContactsService(object):
         :rtype: list
         """
 
-        _, _, contacts = self.http_client.get("/contacts", params=params)
+        _, _, contacts = self.http_client.get("/contacts", params=params, **kwargs)
         return contacts
 
     def create(self, *args, **kwargs):
