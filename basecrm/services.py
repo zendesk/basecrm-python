@@ -280,8 +280,14 @@ class DealsService(object):
         """
 
         _, _, deals = self.http_client.get("/deals", params=params, **kwargs)
-        for deal in deals:
-            deal['value'] = Coercion.to_decimal(deal['value'])
+        if 'raw' in kwargs:
+            # unwrap_envelope() isn't called in case of raw
+            munchified_deals = [deal_dict['data'] for deal_dict in deals['items']]
+            for deal in munchified_deals:
+                deal['value'] = Coercion.to_decimal(deal['value'])
+        else:
+            for deal in deals:
+                deal['value'] = Coercion.to_decimal(deal['value'])
 
         return deals
 
