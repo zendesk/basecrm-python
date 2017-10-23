@@ -15,6 +15,7 @@ def all():
         'loss_reasons_service',
         'notes_service',
         'pipelines_service',
+        'products_service',
         'sources_service',
         'stages_service',
         'tags_service',

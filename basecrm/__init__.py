@@ -39,6 +39,7 @@ from basecrm.services import (
     LossReasonsService,
     NotesService,
     PipelinesService,
+    ProductsService,
     SourcesService,
     StagesService,
     TagsService,

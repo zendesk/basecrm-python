@@ -372,6 +372,22 @@ Actions:
 
 * Retrieve all pipelines - ``client.pipelines.list``
 
+Product
+~~~~~~~
+
+.. code:: python
+
+    client = basecrm.Client(access_token='<YOUR_PERSONAL_ACCESS_TOKEN>')
+    client.products # => basecrm.ProductsService
+
+Actions:
+
+* Retrieve all products - ``client.products.list``
+* Create a product - ``client.products.create``
+* Retrieve a single product - ``client.products.retrieve``
+* Update a product - ``client.products.update``
+* Delete a product - ``client.products.destroy``
+
 Source (deprecated, use DealSource, LeadSource instead)
 ~~~~~~
 

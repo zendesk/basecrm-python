@@ -54,6 +54,7 @@ class Client(object):
         self.__loss_reasons = basecrm.services.LossReasonsService(self.http_client)
         self.__notes = basecrm.services.NotesService(self.http_client)
         self.__pipelines = basecrm.services.PipelinesService(self.http_client)
+        self.__products = basecrm.services.ProductsService(self.http_client)
         self.__sources = basecrm.services.SourcesService(self.http_client)
         self.__stages = basecrm.services.StagesService(self.http_client)
         self.__tags = basecrm.services.TagsService(self.http_client)
@@ -141,6 +142,14 @@ class Client(object):
         :rtype: basecrm.PipelinesService
         """
         return self.__pipelines
+
+    @property
+    def products(self):
+        """
+        :return: :class:`ProductsService <basecrm.ProductsService>` object that gives you an access to all Product related actions.
+        :rtype: basecrm.ProductsService
+        """
+        return self.__products
 
     @property
     def sources(self):

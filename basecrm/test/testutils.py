@@ -92,6 +92,9 @@ class BaseTestCase(unittest.TestCase, UnittestCompat):
     def note(self):
         return self.create_note()
 
+    @lazyproperty
+    def product(self):
+        return self.create_product()
 
     @lazyproperty
     def source(self):
@@ -230,6 +233,24 @@ class BaseTestCase(unittest.TestCase, UnittestCompat):
         note = self.client.notes.create(**note);
 
         return note;
+
+
+    def create_product(self, **attributes):
+        product = {
+            'name': 'Enterprise Plan' +  rand(),
+            'description': 'Includes more storage options',
+            'sku': 'enterprise-plan',
+            'active': True,
+            'max_discount': 4,
+            'max_markup': 4,
+            'cost': 2,
+            'cost_currency': 'USD',
+            'prices': [{'amount': '1599.99', 'currency': 'USD'}, {'amount': '3599.99', 'currency': 'PLN'}],
+        }
+        product.update(attributes)
+        product = self.client.products.create(**product);
+
+        return product;
 
 
     def create_source(self, **attributes):
