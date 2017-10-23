@@ -749,6 +749,105 @@ class LeadSourcesService(object):
         status_code, _, _ = self.http_client.delete("/lead_sources/{id}".format(id=id))
         return status_code == 204
 
+class LineItemsService(object):
+    """
+    :class:`basecrm.LineItemsService` is used by :class:`basecrm.Client` to make
+    actions related to LineItem resource.
+
+    Normally you won't instantiate this class directly.
+    """
+
+    """
+    Allowed attributes for LineItem to send to Base CRM backend servers.
+    """
+    OPTS_KEYS_TO_PERSIST = ['product_id', 'value', 'variation', 'currency', 'quantity']
+
+    def __init__(self, http_client):
+        """
+        :param :class:`basecrm.HttpClient` http_client: Pre configured high-level http client.
+        """
+
+        self.__http_client = http_client
+
+    @property
+    def http_client(self):
+        return self.__http_client
+
+
+    def list(self, order_id, **params):
+        """
+        Retrieve order's line items
+
+        Returns all line items associated to order
+
+        :calls: ``get /orders/{order_id}/line_items``
+        :param int order_id: Unique identifier of a Order.
+        :param dict params: (optional) Search options.
+        :return: List of dictionaries that support attriubte-style access, which represent collection of LineItems.
+        :rtype: list
+        """
+
+        _, _, line_items = self.http_client.get("/orders/{order_id}/line_items".format(order_id=order_id), params=params)
+        return line_items
+
+    def create(self, order_id, *args, **kwargs):
+        """
+        Create a line item
+
+        Adds a new line item to an existing order
+        Line items correspond to products in the catalog, so first you must create products
+        Because products allow defining different prices in different currencies, when creating a line item, the parameter currency is required
+
+        :calls: ``post /orders/{order_id}/line_items``
+        :param int order_id: Unique identifier of a Order.
+        :param tuple *args: (optional) Single object representing LineItem resource.
+        :param dict **kwargs: (optional) LineItem attributes.
+        :return: Dictionary that support attriubte-style access and represents newely created LineItem resource.
+        :rtype: dict
+        """
+
+        if not args and not kwargs:
+            raise Exception('attributes for LineItem are missing')
+
+        attributes = args[0] if args else kwargs
+        attributes = dict((k, v) for k, v in attributes.iteritems() if k in self.OPTS_KEYS_TO_PERSIST)
+
+        _, _, line_item = self.http_client.post("/orders/{order_id}/line_items".format(order_id=order_id), body=attributes)
+        return line_item
+
+    def retrieve(self, order_id, id) :
+        """
+        Retrieve a single line item
+
+        Returns a single line item of an order, according to the unique line item ID provided
+
+        :calls: ``get /orders/{order_id}/line_items/{id}``
+        :param int order_id: Unique identifier of a Order.
+        :param int id: Unique identifier of a LineItem.
+        :return: Dictionary that support attriubte-style access and represent LineItem resource.
+        :rtype: dict
+        """
+
+        _, _, line_item = self.http_client.get("/orders/{order_id}/line_items/{id}".format(order_id=order_id, id=id))
+        return line_item
+
+    def destroy(self, order_id, id) :
+        """
+        Delete a line item
+
+        Remove an order’s line item
+        This operation cannot be undone
+
+        :calls: ``delete /orders/{order_id}/line_items/{id}``
+        :param int order_id: Unique identifier of a Order.
+        :param int id: Unique identifier of a LineItem.
+        :return: True if the operation succeeded.
+        :rtype: bool
+        """
+
+        status_code, _, _ = self.http_client.delete("/orders/{order_id}/line_items/{id}".format(order_id=order_id, id=id))
+        return status_code == 204
+
 class LossReasonsService(object):
     """
     :class:`basecrm.LossReasonsService` is used by :class:`basecrm.Client` to make
@@ -994,6 +1093,127 @@ class NotesService(object):
         """
 
         status_code, _, _ = self.http_client.delete("/notes/{id}".format(id=id))
+        return status_code == 204
+
+class OrdersService(object):
+    """
+    :class:`basecrm.OrdersService` is used by :class:`basecrm.Client` to make
+    actions related to Order resource.
+
+    Normally you won't instantiate this class directly.
+    """
+
+    """
+    Allowed attributes for Order to send to Base CRM backend servers.
+    """
+    OPTS_KEYS_TO_PERSIST = ['deal_id', 'discount']
+
+    def __init__(self, http_client):
+        """
+        :param :class:`basecrm.HttpClient` http_client: Pre configured high-level http client.
+        """
+
+        self.__http_client = http_client
+
+    @property
+    def http_client(self):
+        return self.__http_client
+
+
+    def list(self, **params):
+        """
+        Retrieve all orders
+
+        Returns all orders available to the user according to the parameters provided
+
+        :calls: ``get /orders``
+        :param dict params: (optional) Search options.
+        :return: List of dictionaries that support attriubte-style access, which represent collection of Orders.
+        :rtype: list
+        """
+
+        _, _, orders = self.http_client.get("/orders", params=params)
+        return orders
+
+    def create(self, *args, **kwargs):
+        """
+        Create an order
+
+        Create a new order for a deal
+        User needs to have access to the deal to create an order
+        Each deal can have at most one order and error is returned when attempting to create more
+
+        :calls: ``post /orders``
+        :param tuple *args: (optional) Single object representing Order resource.
+        :param dict **kwargs: (optional) Order attributes.
+        :return: Dictionary that support attriubte-style access and represents newely created Order resource.
+        :rtype: dict
+        """
+
+        if not args and not kwargs:
+            raise Exception('attributes for Order are missing')
+
+        attributes = args[0] if args else kwargs
+        attributes = dict((k, v) for k, v in attributes.iteritems() if k in self.OPTS_KEYS_TO_PERSIST)
+
+        _, _, order = self.http_client.post("/orders", body=attributes)
+        return order
+
+    def retrieve(self, id) :
+        """
+        Retrieve a single order
+
+        Returns a single order available to the user, according to the unique order ID provided
+        If the specified order does not exist, the request will return an error
+
+        :calls: ``get /orders/{id}``
+        :param int id: Unique identifier of a Order.
+        :return: Dictionary that support attriubte-style access and represent Order resource.
+        :rtype: dict
+        """
+
+        _, _, order = self.http_client.get("/orders/{id}".format(id=id))
+        return order
+
+    def update(self, id, *args, **kwargs):
+        """
+        Update an order
+
+        Updates order information
+        If the specified order does not exist, the request will return an error
+
+        :calls: ``put /orders/{id}``
+        :param int id: Unique identifier of a Order.
+        :param tuple *args: (optional) Single object representing Order resource which attributes should be updated.
+        :param dict **kwargs: (optional) Order attributes to update.
+        :return: Dictionary that support attriubte-style access and represents updated Order resource.
+        :rtype: dict
+        """
+
+        if not args and not kwargs:
+            raise Exception('attributes for Order are missing')
+
+        attributes = args[0] if args else kwargs
+        attributes = dict((k, v) for k, v in attributes.iteritems() if k in self.OPTS_KEYS_TO_PERSIST)
+
+        _, _, order = self.http_client.put("/orders/{id}".format(id=id), body=attributes)
+        return order
+
+    def destroy(self, id) :
+        """
+        Delete an order
+
+        Delete an existing order and remove all of the associated line items in a single call
+        If the specified order does not exist, the request will return an error
+        This operation cannot be undone
+
+        :calls: ``delete /orders/{id}``
+        :param int id: Unique identifier of a Order.
+        :return: True if the operation succeeded.
+        :rtype: bool
+        """
+
+        status_code, _, _ = self.http_client.delete("/orders/{id}".format(id=id))
         return status_code == 204
 
 class PipelinesService(object):

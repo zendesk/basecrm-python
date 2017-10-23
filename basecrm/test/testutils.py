@@ -85,12 +85,20 @@ class BaseTestCase(unittest.TestCase, UnittestCompat):
         return self.create_lead_source()
 
     @lazyproperty
+    def line_item(self):
+        return self.create_line_item()
+
+    @lazyproperty
     def loss_reason(self):
         return self.create_loss_reason()
 
     @lazyproperty
     def note(self):
         return self.create_note()
+
+    @lazyproperty
+    def order(self):
+        return self.create_order()
 
     @lazyproperty
     def product(self):
@@ -213,6 +221,25 @@ class BaseTestCase(unittest.TestCase, UnittestCompat):
 
         return lead_source;
 
+
+    def create_line_item(self, **attributes):
+        product_id = self.create_product().id;
+        order_id = self.create_order().id;
+        line_item = {
+            'product_id': product_id,
+            'value': 1599.99,
+            'variation': 0,
+            'currency': "USD",
+            'quantity': 1,
+            'price': 1599.99,
+        }
+        line_item.update(attributes)
+        line_item = self.client.line_items.create(order_id, **line_item);
+
+        line_item['order_id'] = order_id;
+        return line_item;
+
+
     def create_loss_reason(self, **attributes):
         loss_reason = {
             'name': 'We were too expensive' +  rand(),
@@ -233,6 +260,18 @@ class BaseTestCase(unittest.TestCase, UnittestCompat):
         note = self.client.notes.create(**note);
 
         return note;
+
+
+    def create_order(self, **attributes):
+        deal = self.create_deal()
+        order = {
+            'deal_id': deal.id,
+            'discount': 4,
+        }
+        order.update(attributes)
+        order = self.client.orders.create(**order);
+
+        return order;
 
 
     def create_product(self, **attributes):

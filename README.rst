@@ -328,6 +328,21 @@ Actions:
 * Update a source - ``client.lead_sources.update``
 * Delete a source - ``client.lead_sources.destroy``
 
+LineItem
+~~~~~~~~
+
+.. code:: python
+
+    client = basecrm.Client(access_token='<YOUR_PERSONAL_ACCESS_TOKEN>')
+    client.line_items # => basecrm.LineItemsService
+
+Actions:
+
+* Retrieve order's line items - ``client.line_items.list``
+* Create a line item - ``client.line_items.create``
+* Retrieve a single line item - ``client.line_items.retrieve``
+* Delete a line item - ``client.line_items.destroy``
+
 LossReason
 ~~~~~~~~~~
 
@@ -359,6 +374,22 @@ Actions:
 * Retrieve a single note - ``client.notes.retrieve``
 * Update a note - ``client.notes.update``
 * Delete a note - ``client.notes.destroy``
+
+Order
+~~~~~
+
+.. code:: python
+
+    client = basecrm.Client(access_token='<YOUR_PERSONAL_ACCESS_TOKEN>')
+    client.orders # => basecrm.OrdersService
+
+Actions:
+
+* Retrieve all orders - ``client.orders.list``
+* Create an order - ``client.orders.create``
+* Retrieve a single order - ``client.orders.retrieve``
+* Update an order - ``client.orders.update``
+* Delete an order - ``client.orders.destroy``
 
 Pipeline
 ~~~~~~~~
