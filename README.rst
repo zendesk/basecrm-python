@@ -189,13 +189,13 @@ In addition to the client instance, you must provide a device’s UUID within ``
 Now all you have to do is to call ``fetch`` method and pass a lambda or function that you might use to store fetched data to a database.
 
 .. code:: python
- 
+
     def synchronize(meta, data):
       result =  DAO.execute(table=meta.type,
                             statement=meta.sync.event_type,
                             properties=data)
       return basecrm.Sync.ACK if result else basecrm.sync.NACK
-      
+
     sync.fetch(synchronize)
 
 Notice that you must return either ``basecrm.Sync.ACK`` or ``basecrm.Sync.NACK``.
@@ -280,6 +280,22 @@ You should not be using floats or decimal constructed from floats as it may resu
     deal.value = 1000.99
     deal.value = decimal(1000.99)
 
+DealSource
+~~~~~~~~~~
+
+.. code:: python
+
+    client = basecrm.Client(access_token='<YOUR_PERSONAL_ACCESS_TOKEN>')
+    client.deal_sources # => basecrm.DealSourcesService
+
+Actions:
+
+* Retrieve all sources - ``client.deal_sources.list``
+* Create a new source - ``client.deal_sources.create``
+* Retrieve a single source - ``client.deal_sources.retrieve``
+* Update a source - ``client.deal_sources.update``
+* Delete a source - ``client.deal_sources.destroy``
+
 Lead
 ~~~~
 
@@ -295,6 +311,22 @@ Actions:
 * Retrieve a single lead - ``client.leads.retrieve``
 * Update a lead - ``client.leads.update``
 * Delete a lead - ``client.leads.destroy``
+
+LeadSource
+~~~~~~~~~~
+
+.. code:: python
+
+    client = basecrm.Client(access_token='<YOUR_PERSONAL_ACCESS_TOKEN>')
+    client.lead_sources # => basecrm.LeadSourcesService
+
+Actions:
+
+* Retrieve all sources - ``client.lead_sources.list``
+* Create a new source - ``client.lead_sources.create``
+* Retrieve a single source - ``client.lead_sources.retrieve``
+* Update a source - ``client.lead_sources.update``
+* Delete a source - ``client.lead_sources.destroy``
 
 LossReason
 ~~~~~~~~~~
@@ -340,7 +372,7 @@ Actions:
 
 * Retrieve all pipelines - ``client.pipelines.list``
 
-Source
+Source (deprecated, use DealSource, LeadSource instead)
 ~~~~~~
 
 .. code:: python
@@ -413,6 +445,7 @@ Actions:
 * Retrieve all users - ``client.users.list``
 * Retrieve a single user - ``client.users.retrieve``
 * Retrieve an authenticating user - ``client.users.self``
+
 
 Tests
 -----

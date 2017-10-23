@@ -14,7 +14,7 @@ def lazyproperty(function):
     def __lazyproperty(self):
         if not hasattr(self.__class__, attribute):
             setattr(self.__class__, attribute, function(self))
-        return getattr(self.__class__, attribute) 
+        return getattr(self.__class__, attribute)
     return __lazyproperty
 
 if hasattr(unittest.TestCase, 'assertIsInstance'):
@@ -29,9 +29,9 @@ else:
         def assertGreaterEqual(self, given, expected):
             if not (given >= expected):
                 self.fail("%s given mut be greater than or equal to %s" % (given, expected))
-                
+
 class BaseTestCase(unittest.TestCase, UnittestCompat):
-    
+
     @lazyproperty
     def client(self):
         return basecrm.Client(access_token=self.access_token,
@@ -73,8 +73,16 @@ class BaseTestCase(unittest.TestCase, UnittestCompat):
         return self.create_deal()
 
     @lazyproperty
+    def deal_source(self):
+        return self.create_deal_source()
+
+    @lazyproperty
     def lead(self):
         return self.create_lead()
+
+    @lazyproperty
+    def lead_source(self):
+        return self.create_lead_source()
 
     @lazyproperty
     def loss_reason(self):
@@ -158,6 +166,16 @@ class BaseTestCase(unittest.TestCase, UnittestCompat):
         return deal;
 
 
+    def create_deal_source(self, **attributes):
+        deal_source = {
+            'name': 'Word of mouth' +  rand(),
+        }
+        deal_source.update(attributes)
+        deal_source = self.client.deal_sources.create(**deal_source);
+
+        return deal_source;
+
+
     def create_lead(self, **attributes):
         lead = {
             'description': "I know him via Tom",
@@ -182,6 +200,15 @@ class BaseTestCase(unittest.TestCase, UnittestCompat):
 
         return lead;
 
+
+    def create_lead_source(self, **attributes):
+        lead_source = {
+            'name': 'Word of mouth' +  rand(),
+        }
+        lead_source.update(attributes)
+        lead_source = self.client.lead_sources.create(**lead_source);
+
+        return lead_source;
 
     def create_loss_reason(self, **attributes):
         loss_reason = {
