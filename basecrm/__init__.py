@@ -11,7 +11,7 @@ Usage::
   >>> chemex = client.deals.create(name='Chemex', contact_id=coffeeshop.id, value=99, currency='USD')
   >>> print chemex.hot
 
-:copyright: (c) 2016 by BaseCRM developers (developers@getbase.com).
+:copyright: (c) 2015 - 2017 by BaseCRM developers (developers@getbase.com).
 :license: MIT, see LICENSE for more details.
 """
 
@@ -33,10 +33,15 @@ from basecrm.services import (
     AssociatedContactsService,
     ContactsService,
     DealsService,
+    DealSourcesService,
     LeadsService,
+    LeadSourcesService,
+    LineItemsService,
     LossReasonsService,
     NotesService,
+    OrdersService,
     PipelinesService,
+    ProductsService,
     SourcesService,
     StagesService,
     TagsService,

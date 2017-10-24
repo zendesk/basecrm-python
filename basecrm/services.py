@@ -6,7 +6,7 @@ from coercion import Coercion
 class AccountsService(object):
     """
     :class:`basecrm.AccountsService` is used by :class:`basecrm.Client` to make
-    actions related to Account resource. 
+    actions related to Account resource.
 
     Normally you won't instantiate this class directly.
     """
@@ -31,7 +31,7 @@ class AccountsService(object):
         Returns detailed information about your account
 
         :calls: ``get /accounts/self``
-        :rtype: dict 
+        :rtype: dict
         """
 
         _, _, resource = self.http_client.get("/accounts/self")
@@ -40,7 +40,7 @@ class AccountsService(object):
 class AssociatedContactsService(object):
     """
     :class:`basecrm.AssociatedContactsService` is used by :class:`basecrm.Client` to make
-    actions related to AssociatedContact resource. 
+    actions related to AssociatedContact resource.
 
     Normally you won't instantiate this class directly.
     """
@@ -114,7 +114,7 @@ class AssociatedContactsService(object):
         :param int deal_id: Unique identifier of a Deal.
         :param int contact_id: Unique identifier of a Contact.
         :return: True if the operation succeeded.
-        :rtype: bool 
+        :rtype: bool
         """
 
         status_code, _, _ = self.http_client.delete("/deals/{deal_id}/associated_contacts/{contact_id}".format(deal_id=deal_id, contact_id=contact_id))
@@ -123,7 +123,7 @@ class AssociatedContactsService(object):
 class ContactsService(object):
     """
     :class:`basecrm.ContactsService` is used by :class:`basecrm.Client` to make
-    actions related to Contact resource. 
+    actions related to Contact resource.
 
     Normally you won't instantiate this class directly.
     """
@@ -236,7 +236,7 @@ class ContactsService(object):
         :calls: ``delete /contacts/{id}``
         :param int id: Unique identifier of a Contact.
         :return: True if the operation succeeded.
-        :rtype: bool 
+        :rtype: bool
         """
 
         status_code, _, _ = self.http_client.delete("/contacts/{id}".format(id=id))
@@ -245,7 +245,7 @@ class ContactsService(object):
 class DealsService(object):
     """
     :class:`basecrm.DealsService` is used by :class:`basecrm.Client` to make
-    actions related to Deal resource. 
+    actions related to Deal resource.
 
     Normally you won't instantiate this class directly.
     """
@@ -253,7 +253,7 @@ class DealsService(object):
     """
     Allowed attributes for Deal to send to Base CRM backend servers.
     """
-    OPTS_KEYS_TO_PERSIST = ['contact_id', 'currency', 'custom_fields', 'estimated_close_date', 'hot', 'loss_reason_id', 'name', 'owner_id', 'source_id', 'stage_id', 'tags', 'value']
+    OPTS_KEYS_TO_PERSIST = ['contact_id', 'currency', 'custom_fields', 'hot', 'loss_reason_id', 'name', 'owner_id', 'source_id', 'stage_id', 'tags', 'value', 'estimated_close_date', 'customized_win_likelihood']
 
     def __init__(self, http_client):
         """
@@ -369,16 +369,141 @@ class DealsService(object):
         :calls: ``delete /deals/{id}``
         :param int id: Unique identifier of a Deal.
         :return: True if the operation succeeded.
-        :rtype: bool 
+        :rtype: bool
         """
 
         status_code, _, _ = self.http_client.delete("/deals/{id}".format(id=id))
         return status_code == 204
 
+class DealSourcesService(object):
+    """
+    :class:`basecrm.DealSourcesService` is used by :class:`basecrm.Client` to make
+    actions related to DealSource resource.
+
+    Normally you won't instantiate this class directly.
+    """
+
+    """
+    Allowed attributes for DealSource to send to Base CRM backend servers.
+    """
+    OPTS_KEYS_TO_PERSIST = ['name', 'resource_type']
+
+    def __init__(self, http_client):
+        """
+        :param :class:`basecrm.HttpClient` http_client: Pre configured high-level http client.
+        """
+
+        self.__http_client = http_client
+
+    @property
+    def http_client(self):
+        return self.__http_client
+
+
+    def list(self, **params):
+        """
+        Retrieve all sources
+
+        Returns all deal sources available to the user according to the parameters provided
+
+        :calls: ``get /deal_sources``
+        :param dict params: (optional) Search options.
+        :return: List of dictionaries that support attriubte-style access, which represent collection of DealSources.
+        :rtype: list
+        """
+
+        _, _, deal_sources = self.http_client.get("/deal_sources", params=params)
+        return deal_sources
+
+    def create(self, *args, **kwargs):
+        """
+        Create a new source
+
+        Creates a new source
+        <figure class="notice">
+        Source's name **must** be unique
+        </figure>
+
+        :calls: ``post /deal_sources``
+        :param tuple *args: (optional) Single object representing DealSource resource.
+        :param dict **kwargs: (optional) DealSource attributes.
+        :return: Dictionary that support attriubte-style access and represents newely created DealSource resource.
+        :rtype: dict
+        """
+
+        if not args and not kwargs:
+            raise Exception('attributes for DealSource are missing')
+
+        attributes = args[0] if args else kwargs
+        attributes = dict((k, v) for k, v in attributes.iteritems() if k in self.OPTS_KEYS_TO_PERSIST)
+
+        _, _, deal_source = self.http_client.post("/deal_sources", body=attributes)
+        return deal_source
+
+    def retrieve(self, id) :
+        """
+        Retrieve a single source
+
+        Returns a single source available to the user by the provided id
+        If a source with the supplied unique identifier does not exist it returns an error
+
+        :calls: ``get /deal_sources/{id}``
+        :param int id: Unique identifier of a DealSource.
+        :return: Dictionary that support attriubte-style access and represent DealSource resource.
+        :rtype: dict
+        """
+
+        _, _, deal_source = self.http_client.get("/deal_sources/{id}".format(id=id))
+        return deal_source
+
+    def update(self, id, *args, **kwargs):
+        """
+        Update a source
+
+        Updates source information
+        If the specified source does not exist, the request will return an error
+        <figure class="notice">
+        If you want to update a source, you **must** make sure source's name is unique
+        </figure>
+
+        :calls: ``put /deal_sources/{id}``
+        :param int id: Unique identifier of a DealSource.
+        :param tuple *args: (optional) Single object representing DealSource resource which attributes should be updated.
+        :param dict **kwargs: (optional) DealSource attributes to update.
+        :return: Dictionary that support attriubte-style access and represents updated DealSource resource.
+        :rtype: dict
+        """
+
+        if not args and not kwargs:
+            raise Exception('attributes for DealSource are missing')
+
+        attributes = args[0] if args else kwargs
+        attributes = dict((k, v) for k, v in attributes.iteritems() if k in self.OPTS_KEYS_TO_PERSIST)
+
+        _, _, deal_source = self.http_client.put("/deal_sources/{id}".format(id=id), body=attributes)
+        return deal_source
+
+    def destroy(self, id) :
+        """
+        Delete a source
+
+        Delete an existing source
+        If the specified source does not exist, the request will return an error
+        This operation cannot be undone
+
+        :calls: ``delete /deal_sources/{id}``
+        :param int id: Unique identifier of a DealSource.
+        :return: True if the operation succeeded.
+        :rtype: bool
+        """
+
+        status_code, _, _ = self.http_client.delete("/deal_sources/{id}".format(id=id))
+        return status_code == 204
+
 class LeadsService(object):
     """
     :class:`basecrm.LeadsService` is used by :class:`basecrm.Client` to make
-    actions related to Lead resource. 
+    actions related to Lead resource.
 
     Normally you won't instantiate this class directly.
     """
@@ -386,7 +511,7 @@ class LeadsService(object):
     """
     Allowed attributes for Lead to send to Base CRM backend servers.
     """
-    OPTS_KEYS_TO_PERSIST = ['address', 'custom_fields', 'description', 'email', 'facebook', 'fax', 'first_name', 'industry', 'last_name', 'linkedin', 'mobile', 'organization_name', 'owner_id', 'phone', 'skype', 'source_id', 'status', 'tags', 'title', 'twitter', 'website', 'source_id']
+    OPTS_KEYS_TO_PERSIST = ['address', 'custom_fields', 'description', 'email', 'facebook', 'fax', 'first_name', 'industry', 'last_name', 'linkedin', 'mobile', 'organization_name', 'owner_id', 'phone', 'skype', 'source_id', 'status', 'tags', 'title', 'twitter', 'website']
 
     def __init__(self, http_client):
         """
@@ -493,16 +618,240 @@ class LeadsService(object):
         :calls: ``delete /leads/{id}``
         :param int id: Unique identifier of a Lead.
         :return: True if the operation succeeded.
-        :rtype: bool 
+        :rtype: bool
         """
 
         status_code, _, _ = self.http_client.delete("/leads/{id}".format(id=id))
         return status_code == 204
 
+class LeadSourcesService(object):
+    """
+    :class:`basecrm.LeadSourcesService` is used by :class:`basecrm.Client` to make
+    actions related to LeadSource resource.
+
+    Normally you won't instantiate this class directly.
+    """
+
+    """
+    Allowed attributes for LeadSource to send to Base CRM backend servers.
+    """
+    OPTS_KEYS_TO_PERSIST = ['name', 'resource_type']
+
+    def __init__(self, http_client):
+        """
+        :param :class:`basecrm.HttpClient` http_client: Pre configured high-level http client.
+        """
+
+        self.__http_client = http_client
+
+    @property
+    def http_client(self):
+        return self.__http_client
+
+
+    def list(self, **params):
+        """
+        Retrieve all sources
+
+        Returns all lead sources available to the user according to the parameters provided
+
+        :calls: ``get /lead_sources``
+        :param dict params: (optional) Search options.
+        :return: List of dictionaries that support attriubte-style access, which represent collection of LeadSources.
+        :rtype: list
+        """
+
+        _, _, lead_sources = self.http_client.get("/lead_sources", params=params)
+        return lead_sources
+
+    def create(self, *args, **kwargs):
+        """
+        Create a new source
+
+        Creates a new source
+        <figure class="notice">
+        Source's name **must** be unique
+        </figure>
+
+        :calls: ``post /lead_sources``
+        :param tuple *args: (optional) Single object representing LeadSource resource.
+        :param dict **kwargs: (optional) LeadSource attributes.
+        :return: Dictionary that support attriubte-style access and represents newely created LeadSource resource.
+        :rtype: dict
+        """
+
+        if not args and not kwargs:
+            raise Exception('attributes for LeadSource are missing')
+
+        attributes = args[0] if args else kwargs
+        attributes = dict((k, v) for k, v in attributes.iteritems() if k in self.OPTS_KEYS_TO_PERSIST)
+
+        _, _, lead_source = self.http_client.post("/lead_sources", body=attributes)
+        return lead_source
+
+    def retrieve(self, id) :
+        """
+        Retrieve a single source
+
+        Returns a single source available to the user by the provided id
+        If a source with the supplied unique identifier does not exist it returns an error
+
+        :calls: ``get /lead_sources/{id}``
+        :param int id: Unique identifier of a LeadSource.
+        :return: Dictionary that support attriubte-style access and represent LeadSource resource.
+        :rtype: dict
+        """
+
+        _, _, lead_source = self.http_client.get("/lead_sources/{id}".format(id=id))
+        return lead_source
+
+    def update(self, id, *args, **kwargs):
+        """
+        Update a source
+
+        Updates source information
+        If the specified source does not exist, the request will return an error
+        <figure class="notice">
+        If you want to update a source, you **must** make sure source's name is unique
+        </figure>
+
+        :calls: ``put /lead_sources/{id}``
+        :param int id: Unique identifier of a LeadSource.
+        :param tuple *args: (optional) Single object representing LeadSource resource which attributes should be updated.
+        :param dict **kwargs: (optional) LeadSource attributes to update.
+        :return: Dictionary that support attriubte-style access and represents updated LeadSource resource.
+        :rtype: dict
+        """
+
+        if not args and not kwargs:
+            raise Exception('attributes for LeadSource are missing')
+
+        attributes = args[0] if args else kwargs
+        attributes = dict((k, v) for k, v in attributes.iteritems() if k in self.OPTS_KEYS_TO_PERSIST)
+
+        _, _, lead_source = self.http_client.put("/lead_sources/{id}".format(id=id), body=attributes)
+        return lead_source
+
+    def destroy(self, id) :
+        """
+        Delete a source
+
+        Delete an existing source
+        If the specified source does not exist, the request will return an error
+        This operation cannot be undone
+
+        :calls: ``delete /lead_sources/{id}``
+        :param int id: Unique identifier of a LeadSource.
+        :return: True if the operation succeeded.
+        :rtype: bool
+        """
+
+        status_code, _, _ = self.http_client.delete("/lead_sources/{id}".format(id=id))
+        return status_code == 204
+
+class LineItemsService(object):
+    """
+    :class:`basecrm.LineItemsService` is used by :class:`basecrm.Client` to make
+    actions related to LineItem resource.
+
+    Normally you won't instantiate this class directly.
+    """
+
+    """
+    Allowed attributes for LineItem to send to Base CRM backend servers.
+    """
+    OPTS_KEYS_TO_PERSIST = ['product_id', 'value', 'variation', 'currency', 'quantity']
+
+    def __init__(self, http_client):
+        """
+        :param :class:`basecrm.HttpClient` http_client: Pre configured high-level http client.
+        """
+
+        self.__http_client = http_client
+
+    @property
+    def http_client(self):
+        return self.__http_client
+
+
+    def list(self, order_id, **params):
+        """
+        Retrieve order's line items
+
+        Returns all line items associated to order
+
+        :calls: ``get /orders/{order_id}/line_items``
+        :param int order_id: Unique identifier of a Order.
+        :param dict params: (optional) Search options.
+        :return: List of dictionaries that support attriubte-style access, which represent collection of LineItems.
+        :rtype: list
+        """
+
+        _, _, line_items = self.http_client.get("/orders/{order_id}/line_items".format(order_id=order_id), params=params)
+        return line_items
+
+    def create(self, order_id, *args, **kwargs):
+        """
+        Create a line item
+
+        Adds a new line item to an existing order
+        Line items correspond to products in the catalog, so first you must create products
+        Because products allow defining different prices in different currencies, when creating a line item, the parameter currency is required
+
+        :calls: ``post /orders/{order_id}/line_items``
+        :param int order_id: Unique identifier of a Order.
+        :param tuple *args: (optional) Single object representing LineItem resource.
+        :param dict **kwargs: (optional) LineItem attributes.
+        :return: Dictionary that support attriubte-style access and represents newely created LineItem resource.
+        :rtype: dict
+        """
+
+        if not args and not kwargs:
+            raise Exception('attributes for LineItem are missing')
+
+        attributes = args[0] if args else kwargs
+        attributes = dict((k, v) for k, v in attributes.iteritems() if k in self.OPTS_KEYS_TO_PERSIST)
+
+        _, _, line_item = self.http_client.post("/orders/{order_id}/line_items".format(order_id=order_id), body=attributes)
+        return line_item
+
+    def retrieve(self, order_id, id) :
+        """
+        Retrieve a single line item
+
+        Returns a single line item of an order, according to the unique line item ID provided
+
+        :calls: ``get /orders/{order_id}/line_items/{id}``
+        :param int order_id: Unique identifier of a Order.
+        :param int id: Unique identifier of a LineItem.
+        :return: Dictionary that support attriubte-style access and represent LineItem resource.
+        :rtype: dict
+        """
+
+        _, _, line_item = self.http_client.get("/orders/{order_id}/line_items/{id}".format(order_id=order_id, id=id))
+        return line_item
+
+    def destroy(self, order_id, id) :
+        """
+        Delete a line item
+
+        Remove an order’s line item
+        This operation cannot be undone
+
+        :calls: ``delete /orders/{order_id}/line_items/{id}``
+        :param int order_id: Unique identifier of a Order.
+        :param int id: Unique identifier of a LineItem.
+        :return: True if the operation succeeded.
+        :rtype: bool
+        """
+
+        status_code, _, _ = self.http_client.delete("/orders/{order_id}/line_items/{id}".format(order_id=order_id, id=id))
+        return status_code == 204
+
 class LossReasonsService(object):
     """
     :class:`basecrm.LossReasonsService` is used by :class:`basecrm.Client` to make
-    actions related to LossReason resource. 
+    actions related to LossReason resource.
 
     Normally you won't instantiate this class directly.
     """
@@ -618,7 +967,7 @@ class LossReasonsService(object):
         :calls: ``delete /loss_reasons/{id}``
         :param int id: Unique identifier of a LossReason.
         :return: True if the operation succeeded.
-        :rtype: bool 
+        :rtype: bool
         """
 
         status_code, _, _ = self.http_client.delete("/loss_reasons/{id}".format(id=id))
@@ -627,7 +976,7 @@ class LossReasonsService(object):
 class NotesService(object):
     """
     :class:`basecrm.NotesService` is used by :class:`basecrm.Client` to make
-    actions related to Note resource. 
+    actions related to Note resource.
 
     Normally you won't instantiate this class directly.
     """
@@ -740,16 +1089,137 @@ class NotesService(object):
         :calls: ``delete /notes/{id}``
         :param int id: Unique identifier of a Note.
         :return: True if the operation succeeded.
-        :rtype: bool 
+        :rtype: bool
         """
 
         status_code, _, _ = self.http_client.delete("/notes/{id}".format(id=id))
         return status_code == 204
 
+class OrdersService(object):
+    """
+    :class:`basecrm.OrdersService` is used by :class:`basecrm.Client` to make
+    actions related to Order resource.
+
+    Normally you won't instantiate this class directly.
+    """
+
+    """
+    Allowed attributes for Order to send to Base CRM backend servers.
+    """
+    OPTS_KEYS_TO_PERSIST = ['deal_id', 'discount']
+
+    def __init__(self, http_client):
+        """
+        :param :class:`basecrm.HttpClient` http_client: Pre configured high-level http client.
+        """
+
+        self.__http_client = http_client
+
+    @property
+    def http_client(self):
+        return self.__http_client
+
+
+    def list(self, **params):
+        """
+        Retrieve all orders
+
+        Returns all orders available to the user according to the parameters provided
+
+        :calls: ``get /orders``
+        :param dict params: (optional) Search options.
+        :return: List of dictionaries that support attriubte-style access, which represent collection of Orders.
+        :rtype: list
+        """
+
+        _, _, orders = self.http_client.get("/orders", params=params)
+        return orders
+
+    def create(self, *args, **kwargs):
+        """
+        Create an order
+
+        Create a new order for a deal
+        User needs to have access to the deal to create an order
+        Each deal can have at most one order and error is returned when attempting to create more
+
+        :calls: ``post /orders``
+        :param tuple *args: (optional) Single object representing Order resource.
+        :param dict **kwargs: (optional) Order attributes.
+        :return: Dictionary that support attriubte-style access and represents newely created Order resource.
+        :rtype: dict
+        """
+
+        if not args and not kwargs:
+            raise Exception('attributes for Order are missing')
+
+        attributes = args[0] if args else kwargs
+        attributes = dict((k, v) for k, v in attributes.iteritems() if k in self.OPTS_KEYS_TO_PERSIST)
+
+        _, _, order = self.http_client.post("/orders", body=attributes)
+        return order
+
+    def retrieve(self, id) :
+        """
+        Retrieve a single order
+
+        Returns a single order available to the user, according to the unique order ID provided
+        If the specified order does not exist, the request will return an error
+
+        :calls: ``get /orders/{id}``
+        :param int id: Unique identifier of a Order.
+        :return: Dictionary that support attriubte-style access and represent Order resource.
+        :rtype: dict
+        """
+
+        _, _, order = self.http_client.get("/orders/{id}".format(id=id))
+        return order
+
+    def update(self, id, *args, **kwargs):
+        """
+        Update an order
+
+        Updates order information
+        If the specified order does not exist, the request will return an error
+
+        :calls: ``put /orders/{id}``
+        :param int id: Unique identifier of a Order.
+        :param tuple *args: (optional) Single object representing Order resource which attributes should be updated.
+        :param dict **kwargs: (optional) Order attributes to update.
+        :return: Dictionary that support attriubte-style access and represents updated Order resource.
+        :rtype: dict
+        """
+
+        if not args and not kwargs:
+            raise Exception('attributes for Order are missing')
+
+        attributes = args[0] if args else kwargs
+        attributes = dict((k, v) for k, v in attributes.iteritems() if k in self.OPTS_KEYS_TO_PERSIST)
+
+        _, _, order = self.http_client.put("/orders/{id}".format(id=id), body=attributes)
+        return order
+
+    def destroy(self, id) :
+        """
+        Delete an order
+
+        Delete an existing order and remove all of the associated line items in a single call
+        If the specified order does not exist, the request will return an error
+        This operation cannot be undone
+
+        :calls: ``delete /orders/{id}``
+        :param int id: Unique identifier of a Order.
+        :return: True if the operation succeeded.
+        :rtype: bool
+        """
+
+        status_code, _, _ = self.http_client.delete("/orders/{id}".format(id=id))
+        return status_code == 204
+
 class PipelinesService(object):
     """
     :class:`basecrm.PipelinesService` is used by :class:`basecrm.Client` to make
-    actions related to Pipeline resource. 
+    actions related to Pipeline resource.
 
     Normally you won't instantiate this class directly.
     """
@@ -782,10 +1252,134 @@ class PipelinesService(object):
         _, _, pipelines = self.http_client.get("/pipelines", params=params)
         return pipelines
 
+class ProductsService(object):
+    """
+    :class:`basecrm.ProductsService` is used by :class:`basecrm.Client` to make
+    actions related to Product resource.
+
+    Normally you won't instantiate this class directly.
+    """
+
+    """
+    Allowed attributes for Product to send to Base CRM backend servers.
+    """
+    OPTS_KEYS_TO_PERSIST = ['name', 'description', 'sku', 'active', 'cost', 'cost_currency', 'prices', 'max_discount', 'max_markup']
+
+    def __init__(self, http_client):
+        """
+        :param :class:`basecrm.HttpClient` http_client: Pre configured high-level http client.
+        """
+
+        self.__http_client = http_client
+
+    @property
+    def http_client(self):
+        return self.__http_client
+
+
+    def list(self, **params):
+        """
+        Retrieve all products
+
+        Returns all products available to the user according to the parameters provided
+
+        :calls: ``get /products``
+        :param dict params: (optional) Search options.
+        :return: List of dictionaries that support attriubte-style access, which represent collection of Products.
+        :rtype: list
+        """
+
+        _, _, products = self.http_client.get("/products", params=params)
+        return products
+
+    def create(self, *args, **kwargs):
+        """
+        Create a product
+
+        Create a new product
+
+        :calls: ``post /products``
+        :param tuple *args: (optional) Single object representing Product resource.
+        :param dict **kwargs: (optional) Product attributes.
+        :return: Dictionary that support attriubte-style access and represents newely created Product resource.
+        :rtype: dict
+        """
+
+        if not args and not kwargs:
+            raise Exception('attributes for Product are missing')
+
+        attributes = args[0] if args else kwargs
+        attributes = dict((k, v) for k, v in attributes.iteritems() if k in self.OPTS_KEYS_TO_PERSIST)
+
+        _, _, product = self.http_client.post("/products", body=attributes)
+        return product
+
+    def retrieve(self, id) :
+        """
+        Retrieve a single product
+
+        Returns a single product, according to the unique product ID provided
+        If the specified product does not exist, the request will return an error
+
+        :calls: ``get /products/{id}``
+        :param int id: Unique identifier of a Product.
+        :return: Dictionary that support attriubte-style access and represent Product resource.
+        :rtype: dict
+        """
+
+        _, _, product = self.http_client.get("/products/{id}".format(id=id))
+        return product
+
+    def update(self, id, *args, **kwargs):
+        """
+        Update a product
+
+        Updates product information
+        If the specified product does not exist, the request will return an error
+        <figure class="notice"><p>In order to modify prices used on a record, you need to supply the entire set
+        <code>prices</code> are replaced every time they are used in a request
+        </p></figure>
+
+        :calls: ``put /products/{id}``
+        :param int id: Unique identifier of a Product.
+        :param tuple *args: (optional) Single object representing Product resource which attributes should be updated.
+        :param dict **kwargs: (optional) Product attributes to update.
+        :return: Dictionary that support attriubte-style access and represents updated Product resource.
+        :rtype: dict
+        """
+
+        if not args and not kwargs:
+            raise Exception('attributes for Product are missing')
+
+        attributes = args[0] if args else kwargs
+        attributes = dict((k, v) for k, v in attributes.iteritems() if k in self.OPTS_KEYS_TO_PERSIST)
+
+        _, _, product = self.http_client.put("/products/{id}".format(id=id), body=attributes)
+        return product
+
+    def destroy(self, id) :
+        """
+        Delete a product
+
+        Delete an existing product from the catalog
+        Existing orders and line items are not affected
+        If the specified product does not exist, the request will return an error
+        This operation cannot be undone
+        Products can be removed only by an account administrator
+
+        :calls: ``delete /products/{id}``
+        :param int id: Unique identifier of a Product.
+        :return: True if the operation succeeded.
+        :rtype: bool
+        """
+
+        status_code, _, _ = self.http_client.delete("/products/{id}".format(id=id))
+        return status_code == 204
+
 class SourcesService(object):
     """
     :class:`basecrm.SourcesService` is used by :class:`basecrm.Client` to make
-    actions related to Source resource. 
+    actions related to Source resource.
 
     Normally you won't instantiate this class directly.
     """
@@ -901,7 +1495,7 @@ class SourcesService(object):
         :calls: ``delete /sources/{id}``
         :param int id: Unique identifier of a Source.
         :return: True if the operation succeeded.
-        :rtype: bool 
+        :rtype: bool
         """
 
         status_code, _, _ = self.http_client.delete("/sources/{id}".format(id=id))
@@ -910,7 +1504,7 @@ class SourcesService(object):
 class StagesService(object):
     """
     :class:`basecrm.StagesService` is used by :class:`basecrm.Client` to make
-    actions related to Stage resource. 
+    actions related to Stage resource.
 
     Normally you won't instantiate this class directly.
     """
@@ -946,7 +1540,7 @@ class StagesService(object):
 class TagsService(object):
     """
     :class:`basecrm.TagsService` is used by :class:`basecrm.Client` to make
-    actions related to Tag resource. 
+    actions related to Tag resource.
 
     Normally you won't instantiate this class directly.
     """
@@ -1059,7 +1653,7 @@ class TagsService(object):
         :calls: ``delete /tags/{id}``
         :param int id: Unique identifier of a Tag.
         :return: True if the operation succeeded.
-        :rtype: bool 
+        :rtype: bool
         """
 
         status_code, _, _ = self.http_client.delete("/tags/{id}".format(id=id))
@@ -1068,7 +1662,7 @@ class TagsService(object):
 class TasksService(object):
     """
     :class:`basecrm.TasksService` is used by :class:`basecrm.Client` to make
-    actions related to Task resource. 
+    actions related to Task resource.
 
     Normally you won't instantiate this class directly.
     """
@@ -1184,7 +1778,7 @@ class TasksService(object):
         :calls: ``delete /tasks/{id}``
         :param int id: Unique identifier of a Task.
         :return: True if the operation succeeded.
-        :rtype: bool 
+        :rtype: bool
         """
 
         status_code, _, _ = self.http_client.delete("/tasks/{id}".format(id=id))
@@ -1193,7 +1787,7 @@ class TasksService(object):
 class UsersService(object):
     """
     :class:`basecrm.UsersService` is used by :class:`basecrm.Client` to make
-    actions related to User resource. 
+    actions related to User resource.
 
     Normally you won't instantiate this class directly.
     """
@@ -1249,7 +1843,7 @@ class UsersService(object):
         Returns a single authenticating user, according to the authentication credentials provided
 
         :calls: ``get /users/self``
-        :rtype: dict 
+        :rtype: dict
         """
 
         _, _, resource = self.http_client.get("/users/self")

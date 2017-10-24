@@ -14,7 +14,7 @@ def lazyproperty(function):
     def __lazyproperty(self):
         if not hasattr(self.__class__, attribute):
             setattr(self.__class__, attribute, function(self))
-        return getattr(self.__class__, attribute) 
+        return getattr(self.__class__, attribute)
     return __lazyproperty
 
 if hasattr(unittest.TestCase, 'assertIsInstance'):
@@ -29,9 +29,9 @@ else:
         def assertGreaterEqual(self, given, expected):
             if not (given >= expected):
                 self.fail("%s given mut be greater than or equal to %s" % (given, expected))
-                
+
 class BaseTestCase(unittest.TestCase, UnittestCompat):
-    
+
     @lazyproperty
     def client(self):
         return basecrm.Client(access_token=self.access_token,
@@ -73,8 +73,20 @@ class BaseTestCase(unittest.TestCase, UnittestCompat):
         return self.create_deal()
 
     @lazyproperty
+    def deal_source(self):
+        return self.create_deal_source()
+
+    @lazyproperty
     def lead(self):
         return self.create_lead()
+
+    @lazyproperty
+    def lead_source(self):
+        return self.create_lead_source()
+
+    @lazyproperty
+    def line_item(self):
+        return self.create_line_item()
 
     @lazyproperty
     def loss_reason(self):
@@ -84,6 +96,13 @@ class BaseTestCase(unittest.TestCase, UnittestCompat):
     def note(self):
         return self.create_note()
 
+    @lazyproperty
+    def order(self):
+        return self.create_order()
+
+    @lazyproperty
+    def product(self):
+        return self.create_product()
 
     @lazyproperty
     def source(self):
@@ -158,6 +177,16 @@ class BaseTestCase(unittest.TestCase, UnittestCompat):
         return deal;
 
 
+    def create_deal_source(self, **attributes):
+        deal_source = {
+            'name': 'Word of mouth' +  rand(),
+        }
+        deal_source.update(attributes)
+        deal_source = self.client.deal_sources.create(**deal_source);
+
+        return deal_source;
+
+
     def create_lead(self, **attributes):
         lead = {
             'description': "I know him via Tom",
@@ -183,6 +212,34 @@ class BaseTestCase(unittest.TestCase, UnittestCompat):
         return lead;
 
 
+    def create_lead_source(self, **attributes):
+        lead_source = {
+            'name': 'Word of mouth' +  rand(),
+        }
+        lead_source.update(attributes)
+        lead_source = self.client.lead_sources.create(**lead_source);
+
+        return lead_source;
+
+
+    def create_line_item(self, **attributes):
+        product_id = self.create_product().id;
+        order_id = self.create_order().id;
+        line_item = {
+            'product_id': product_id,
+            'value': 1599.99,
+            'variation': 0,
+            'currency': "USD",
+            'quantity': 1,
+            'price': 1599.99,
+        }
+        line_item.update(attributes)
+        line_item = self.client.line_items.create(order_id, **line_item);
+
+        line_item['order_id'] = order_id;
+        return line_item;
+
+
     def create_loss_reason(self, **attributes):
         loss_reason = {
             'name': 'We were too expensive' +  rand(),
@@ -203,6 +260,36 @@ class BaseTestCase(unittest.TestCase, UnittestCompat):
         note = self.client.notes.create(**note);
 
         return note;
+
+
+    def create_order(self, **attributes):
+        deal = self.create_deal()
+        order = {
+            'deal_id': deal.id,
+            'discount': 4,
+        }
+        order.update(attributes)
+        order = self.client.orders.create(**order);
+
+        return order;
+
+
+    def create_product(self, **attributes):
+        product = {
+            'name': 'Enterprise Plan' +  rand(),
+            'description': 'Includes more storage options',
+            'sku': 'enterprise-plan',
+            'active': True,
+            'max_discount': 4,
+            'max_markup': 4,
+            'cost': 2,
+            'cost_currency': 'USD',
+            'prices': [{'amount': '1599.99', 'currency': 'USD'}, {'amount': '3599.99', 'currency': 'PLN'}],
+        }
+        product.update(attributes)
+        product = self.client.products.create(**product);
+
+        return product;
 
 
     def create_source(self, **attributes):
