@@ -835,7 +835,7 @@ class LineItemsService(object):
         """
         Delete a line item
 
-        Remove an order’s line item
+        Remove an order's line item
         This operation cannot be undone
 
         :calls: ``delete /orders/{order_id}/line_items/{id}``
