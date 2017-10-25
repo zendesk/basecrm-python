@@ -30,7 +30,8 @@ class Configuration(object):
         self.verify_ssl = options['verify_ssl'] if 'verify_ssl' in options else True
 
         if self.verbose:
-            print("BaseCRM client configuration: {}".format(self.__dict__))
+            separator = ":"
+            print(separator.join(("BaseCRM client configuration", str(self.__dict__))))
 
     def validate(self):
         """Validates whether a configuration is valid.
