@@ -1,5 +1,21 @@
 ## CHANGELOG
 
+### v1.2.4 (2017-11-23)
+
+**Features and Improvements**
+
+* New resources:
+    * Order
+    * LineItem
+    * Product
+    * LeadSource
+    * DealSource
+
+**Fixes**
+
+* python3 and python2.6 compatible print statement
+
+
 ### v1.2.3 (2017-06-08)
 
 **Fixes**
