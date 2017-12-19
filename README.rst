@@ -138,6 +138,18 @@ Create a new organization and after that change it's attributes
     lead.website = 'http://www.designservices.com'
     client.leads.update(lead.id, lead)
 
+Pagination
+~~~~~~~~~~
+
+You can control the maximum number of records that are returned using the standard per_page query parameter.
+To choose a page, use the standard page query parameter.
+The default page is always the first one. The default limit is 25 and maximum number that can be returned is 100.
+
+.. code:: python
+
+    client = basecrm.Client(access_token='<YOUR_PERSONAL_ACCESS_TOKEN>')
+    leads = client.leads.list(per_page=50, page=2)
+
 Error handling
 ~~~~~~~~~~~~~~
 
