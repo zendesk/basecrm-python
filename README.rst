@@ -308,6 +308,22 @@ Actions:
 * Update a source - ``client.deal_sources.update``
 * Delete a source - ``client.deal_sources.destroy``
 
+DealUnqualifiedReason
+~~~~~~~~~~~~~~~~~~~~~
+
+.. code:: python
+
+    client = basecrm.Client(access_token='<YOUR_PERSONAL_ACCESS_TOKEN>')
+    client.deal_unqualified_reasons # => basecrm.DealUnqualifiedReasonsService
+
+Actions:
+
+* Retrieve all deal unqualified reasons - ``client.deal_unqualified_reasons.list``
+* Create a deal unqualified reason - ``client.deal_unqualified_reasons.create``
+* Retrieve a single deal unqualified reason - ``client.deal_unqualified_reasons.retrieve``
+* Update a deal unqualified reason - ``client.deal_unqualified_reasons.update``
+* Delete a deal unqualified reason - ``client.deal_unqualified_reasons.destroy``
+
 Lead
 ~~~~
 
@@ -339,6 +355,18 @@ Actions:
 * Retrieve a single source - ``client.lead_sources.retrieve``
 * Update a source - ``client.lead_sources.update``
 * Delete a source - ``client.lead_sources.destroy``
+
+LeadUnqualifiedReason
+~~~~~~~~~~~~~~~~~~~~~
+
+.. code:: python
+
+    client = basecrm.Client(access_token='<YOUR_PERSONAL_ACCESS_TOKEN>')
+    client.lead_unqualified_reasons # => basecrm.LeadUnqualifiedReasonsService
+
+Actions:
+
+* Retrieve all lead unqualified reasons - ``client.lead_unqualified_reasons.list``
 
 LineItem
 ~~~~~~~~

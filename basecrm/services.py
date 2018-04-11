@@ -500,6 +500,131 @@ class DealSourcesService(object):
         status_code, _, _ = self.http_client.delete("/deal_sources/{id}".format(id=id))
         return status_code == 204
 
+class DealUnqualifiedReasonsService(object):
+    """
+    :class:`basecrm.DealUnqualifiedReasonsService` is used by :class:`basecrm.Client` to make
+    actions related to DealUnqualifiedReason resource.
+
+    Normally you won't instantiate this class directly.
+    """
+
+    """
+    Allowed attributes for DealUnqualifiedReason to send to Base CRM backend servers.
+    """
+    OPTS_KEYS_TO_PERSIST = ['name']
+
+    def __init__(self, http_client):
+        """
+        :param :class:`basecrm.HttpClient` http_client: Pre configured high-level http client.
+        """
+
+        self.__http_client = http_client
+
+    @property
+    def http_client(self):
+        return self.__http_client
+
+
+    def list(self, **params):
+        """
+        Retrieve all deal unqualified reasons
+
+        Returns all deal unqualified reasons available to the user according to the parameters provided
+
+        :calls: ``get /deal_unqualified_reasons``
+        :param dict params: (optional) Search options.
+        :return: List of dictionaries that support attriubte-style access, which represent collection of DealUnqualifiedReasons.
+        :rtype: list
+        """
+
+        _, _, deal_unqualified_reasons = self.http_client.get("/deal_unqualified_reasons", params=params)
+        return deal_unqualified_reasons
+
+    def create(self, *args, **kwargs):
+        """
+        Create a deal unqualified reason
+
+        Create a new deal unqualified reason
+        <figure class="notice">
+        Deal unqualified reason's name **must** be unique
+        </figure>
+
+        :calls: ``post /deal_unqualified_reasons``
+        :param tuple *args: (optional) Single object representing DealUnqualifiedReason resource.
+        :param dict **kwargs: (optional) DealUnqualifiedReason attributes.
+        :return: Dictionary that support attriubte-style access and represents newely created DealUnqualifiedReason resource.
+        :rtype: dict
+        """
+
+        if not args and not kwargs:
+            raise Exception('attributes for DealUnqualifiedReason are missing')
+
+        attributes = args[0] if args else kwargs
+        attributes = dict((k, v) for k, v in attributes.iteritems() if k in self.OPTS_KEYS_TO_PERSIST)
+
+        _, _, deal_unqualified_reason = self.http_client.post("/deal_unqualified_reasons", body=attributes)
+        return deal_unqualified_reason
+
+    def retrieve(self, id) :
+        """
+        Retrieve a single deal unqualified reason
+
+        Returns a single deal unqualified reason available to the user by the provided id
+        If a loss reason with the supplied unique identifier does not exist, it returns an error
+
+        :calls: ``get /deal_unqualified_reasons/{id}``
+        :param int id: Unique identifier of a DealUnqualifiedReason.
+        :return: Dictionary that support attriubte-style access and represent DealUnqualifiedReason resource.
+        :rtype: dict
+        """
+
+        _, _, deal_unqualified_reason = self.http_client.get("/deal_unqualified_reasons/{id}".format(id=id))
+        return deal_unqualified_reason
+
+    def update(self, id, *args, **kwargs):
+        """
+        Update a deal unqualified reason
+
+        Updates a deal unqualified reason information
+        If the specified deal unqualified reason does not exist, the request will return an error
+        <figure class="notice">
+        If you want to update deal unqualified reason you **must** make sure name of the reason is unique
+        </figure>
+
+        :calls: ``put /deal_unqualified_reasons/{id}``
+        :param int id: Unique identifier of a DealUnqualifiedReason.
+        :param tuple *args: (optional) Single object representing DealUnqualifiedReason resource which attributes should be updated.
+        :param dict **kwargs: (optional) DealUnqualifiedReason attributes to update.
+        :return: Dictionary that support attriubte-style access and represents updated DealUnqualifiedReason resource.
+        :rtype: dict
+        """
+
+        if not args and not kwargs:
+            raise Exception('attributes for DealUnqualifiedReason are missing')
+
+        attributes = args[0] if args else kwargs
+        attributes = dict((k, v) for k, v in attributes.iteritems() if k in self.OPTS_KEYS_TO_PERSIST)
+
+        _, _, deal_unqualified_reason = self.http_client.put("/deal_unqualified_reasons/{id}".format(id=id), body=attributes)
+        return deal_unqualified_reason
+
+    def destroy(self, id) :
+        """
+        Delete a deal unqualified reason
+
+        Delete an existing deal unqualified reason
+        If the reason with supplied unique identifier does not exist it returns an error
+        This operation cannot be undone
+
+        :calls: ``delete /deal_unqualified_reasons/{id}``
+        :param int id: Unique identifier of a DealUnqualifiedReason.
+        :return: True if the operation succeeded.
+        :rtype: bool
+        """
+
+        status_code, _, _ = self.http_client.delete("/deal_unqualified_reasons/{id}".format(id=id))
+        return status_code == 204
+
 class LeadsService(object):
     """
     :class:`basecrm.LeadsService` is used by :class:`basecrm.Client` to make
@@ -748,6 +873,42 @@ class LeadSourcesService(object):
 
         status_code, _, _ = self.http_client.delete("/lead_sources/{id}".format(id=id))
         return status_code == 204
+
+class LeadUnqualifiedReasonsService(object):
+    """
+    :class:`basecrm.LeadUnqualifiedReasonsService` is used by :class:`basecrm.Client` to make
+    actions related to LeadUnqualifiedReason resource.
+
+    Normally you won't instantiate this class directly.
+    """
+
+
+    def __init__(self, http_client):
+        """
+        :param :class:`basecrm.HttpClient` http_client: Pre configured high-level http client.
+        """
+
+        self.__http_client = http_client
+
+    @property
+    def http_client(self):
+        return self.__http_client
+
+
+    def list(self, **params):
+        """
+        Retrieve all lead unqualified reasons
+
+        Returns all lead unqualified reasons available to the user according to the parameters provided
+
+        :calls: ``get /lead_unqualified_reasons``
+        :param dict params: (optional) Search options.
+        :return: List of dictionaries that support attriubte-style access, which represent collection of LeadUnqualifiedReasons.
+        :rtype: list
+        """
+
+        _, _, lead_unqualified_reasons = self.http_client.get("/lead_unqualified_reasons", params=params)
+        return lead_unqualified_reasons
 
 class LineItemsService(object):
     """
