@@ -12,7 +12,7 @@ class Client(object):
     :attribute :class:`Configuration <basecrm.Configuration>` config: Current Base CRM client configuration.
     :attribute :class:`HttpClient <basecrm.HttpClient>` http_client: Http client.
 
-    :copyright: (c) 2015 - 2017 by BaseCRM developers (developers@getbase.com).
+    :copyright: (c) 2015 - 2018 by BaseCRM developers (developers@getbase.com).
     :license: MIT, see LICENSE for more details.
     """
 
@@ -49,8 +49,10 @@ class Client(object):
         self.__contacts = basecrm.services.ContactsService(self.http_client)
         self.__deals = basecrm.services.DealsService(self.http_client)
         self.__deal_sources = basecrm.services.DealSourcesService(self.http_client)
+        self.__deal_unqualified_reasons = basecrm.services.DealUnqualifiedReasonsService(self.http_client)
         self.__leads = basecrm.services.LeadsService(self.http_client)
         self.__lead_sources = basecrm.services.LeadSourcesService(self.http_client)
+        self.__lead_unqualified_reasons = basecrm.services.LeadUnqualifiedReasonsService(self.http_client)
         self.__line_items = basecrm.services.LineItemsService(self.http_client)
         self.__loss_reasons = basecrm.services.LossReasonsService(self.http_client)
         self.__notes = basecrm.services.NotesService(self.http_client)
@@ -106,6 +108,14 @@ class Client(object):
         return self.__deal_sources
 
     @property
+    def deal_unqualified_reasons(self):
+        """
+        :return: :class:`DealUnqualifiedReasonsService <basecrm.DealUnqualifiedReasonsService>` object that gives you an access to all DealUnqualifiedReason related actions.
+        :rtype: basecrm.DealUnqualifiedReasonsService
+        """
+        return self.__deal_unqualified_reasons
+
+    @property
     def leads(self):
         """
         :return: :class:`LeadsService <basecrm.LeadsService>` object that gives you an access to all Lead related actions.
@@ -120,6 +130,14 @@ class Client(object):
         :rtype: basecrm.LeadSourcesService
         """
         return self.__lead_sources
+
+    @property
+    def lead_unqualified_reasons(self):
+        """
+        :return: :class:`LeadUnqualifiedReasonsService <basecrm.LeadUnqualifiedReasonsService>` object that gives you an access to all LeadUnqualifiedReason related actions.
+        :rtype: basecrm.LeadUnqualifiedReasonsService
+        """
+        return self.__lead_unqualified_reasons
 
     @property
     def line_items(self):

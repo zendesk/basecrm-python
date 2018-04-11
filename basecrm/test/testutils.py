@@ -77,6 +77,10 @@ class BaseTestCase(unittest.TestCase, UnittestCompat):
         return self.create_deal_source()
 
     @lazyproperty
+    def deal_unqualified_reason(self):
+        return self.create_deal_unqualified_reason()
+
+    @lazyproperty
     def lead(self):
         return self.create_lead()
 
@@ -185,6 +189,16 @@ class BaseTestCase(unittest.TestCase, UnittestCompat):
         deal_source = self.client.deal_sources.create(**deal_source);
 
         return deal_source;
+
+
+    def create_deal_unqualified_reason(self, **attributes):
+        deal_unqualified_reason = {
+            'name': 'We were too expensive' +  rand(),
+        }
+        deal_unqualified_reason.update(attributes)
+        deal_unqualified_reason = self.client.deal_unqualified_reasons.create(**deal_unqualified_reason);
+
+        return deal_unqualified_reason;
 
 
     def create_lead(self, **attributes):
