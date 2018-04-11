@@ -1,5 +1,13 @@
 ## CHANGELOG
 
+### v1.2.5 (2018-04-11)
+
+**Features and Improvements**
+
+* New resources:
+    * DealUnqualifiedReason
+    * LeadUnqualifiedReason
+
 ### v1.2.4 (2017-11-23)
 
 **Features and Improvements**
