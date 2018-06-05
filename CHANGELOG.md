@@ -1,5 +1,11 @@
 ## CHANGELOG
 
+### v1.2.6 (2018-06-05)
+
+**Features and Improvements**
+
+* Added possibility to set deal's 'last_stage_change_at' attribute
+
 ### v1.2.5 (2018-04-11)
 
 **Features and Improvements**
