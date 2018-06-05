@@ -253,7 +253,7 @@ class DealsService(object):
     """
     Allowed attributes for Deal to send to Base CRM backend servers.
     """
-    OPTS_KEYS_TO_PERSIST = ['contact_id', 'currency', 'custom_fields', 'hot', 'loss_reason_id', 'name', 'owner_id', 'source_id', 'stage_id', 'tags', 'value', 'estimated_close_date', 'customized_win_likelihood']
+    OPTS_KEYS_TO_PERSIST = ['contact_id', 'currency', 'custom_fields', 'hot', 'loss_reason_id', 'name', 'owner_id', 'source_id', 'stage_id', 'last_stage_change_at', 'tags', 'value', 'estimated_close_date', 'customized_win_likelihood']
 
     def __init__(self, http_client):
         """
