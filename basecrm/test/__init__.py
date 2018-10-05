@@ -24,7 +24,10 @@ def all():
         'stages_service',
         'tags_service',
         'tasks_service',
+        'text_messages_service',
         'users_service',
+        'visits_service',
+        'visit_outcomes_service',
         'sync',
         'sync_service',
         'coercion'

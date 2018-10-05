@@ -63,7 +63,10 @@ class Client(object):
         self.__stages = basecrm.services.StagesService(self.http_client)
         self.__tags = basecrm.services.TagsService(self.http_client)
         self.__tasks = basecrm.services.TasksService(self.http_client)
+        self.__text_messages = basecrm.services.TextMessagesService(self.http_client)
         self.__users = basecrm.services.UsersService(self.http_client)
+        self.__visits = basecrm.services.VisitsService(self.http_client)
+        self.__visit_outcomes = basecrm.services.VisitOutcomesService(self.http_client)
 
         self.__sync = basecrm.sync.SyncService(self.http_client)
 
@@ -220,12 +223,36 @@ class Client(object):
         return self.__tasks
 
     @property
+    def text_messages(self):
+        """
+        :return: :class:`TextMessagesService <basecrm.TextMessagesService>` object that gives you an access to all TextMessage related actions.
+        :rtype: basecrm.TextMessagesService
+        """
+        return self.__text_messages
+
+    @property
     def users(self):
         """
         :return: :class:`UsersService <basecrm.UsersService>` object that gives you an access to all User related actions.
         :rtype: basecrm.UsersService
         """
         return self.__users
+
+    @property
+    def visits(self):
+        """
+        :return: :class:`VisitsService <basecrm.VisitsService>` object that gives you an access to all Visit related actions.
+        :rtype: basecrm.VisitsService
+        """
+        return self.__visits
+
+    @property
+    def visit_outcomes(self):
+        """
+        :return: :class:`VisitOutcomesService <basecrm.VisitOutcomesService>` object that gives you an access to all VisitOutcome related actions.
+        :rtype: basecrm.VisitOutcomesService
+        """
+        return self.__visit_outcomes
 
     @property
     def sync(self):
