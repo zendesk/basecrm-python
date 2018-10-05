@@ -519,6 +519,19 @@ Actions:
 * Update a task - ``client.tasks.update``
 * Delete a task - ``client.tasks.destroy``
 
+TextMessage
+~~~~~~~~~~~
+
+.. code:: python
+
+    client = basecrm.Client(access_token='<YOUR_PERSONAL_ACCESS_TOKEN>')
+    client.text_messages # => basecrm.TextMessagesService
+
+Actions:
+
+* Retrieve text messages - ``client.text_messages.list``
+* Retrieve a single text message - ``client.text_messages.retrieve``
+
 User
 ~~~~
 
@@ -532,6 +545,30 @@ Actions:
 * Retrieve all users - ``client.users.list``
 * Retrieve a single user - ``client.users.retrieve``
 * Retrieve an authenticating user - ``client.users.self``
+
+Visit
+~~~~~
+
+.. code:: python
+
+    client = basecrm.Client(access_token='<YOUR_PERSONAL_ACCESS_TOKEN>')
+    client.visits # => basecrm.VisitsService
+
+Actions:
+
+* Retrieve visits - ``client.visits.list``
+
+VisitOutcome
+~~~~~~~~~~~~
+
+.. code:: python
+
+    client = basecrm.Client(access_token='<YOUR_PERSONAL_ACCESS_TOKEN>')
+    client.visit_outcomes # => basecrm.VisitOutcomesService
+
+Actions:
+
+* Retrieve visit outcomes - ``client.visit_outcomes.list``
 
 
 Tests

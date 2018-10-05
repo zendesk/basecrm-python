@@ -48,7 +48,10 @@ from basecrm.services import (
     StagesService,
     TagsService,
     TasksService,
+    TextMessagesService,
     UsersService,
+    VisitsService,
+    VisitOutcomesService,
 )
 
 from basecrm.sync import (

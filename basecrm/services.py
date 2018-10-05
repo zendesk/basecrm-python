@@ -1945,6 +1945,58 @@ class TasksService(object):
         status_code, _, _ = self.http_client.delete("/tasks/{id}".format(id=id))
         return status_code == 204
 
+class TextMessagesService(object):
+    """
+    :class:`basecrm.TextMessagesService` is used by :class:`basecrm.Client` to make
+    actions related to TextMessage resource.
+
+    Normally you won't instantiate this class directly.
+    """
+
+
+    def __init__(self, http_client):
+        """
+        :param :class:`basecrm.HttpClient` http_client: Pre configured high-level http client.
+        """
+
+        self.__http_client = http_client
+
+    @property
+    def http_client(self):
+        return self.__http_client
+
+
+    def list(self, **params):
+        """
+        Retrieve text messages
+
+        Returns Text Messages, according to the parameters provided
+
+        :calls: ``get /text_messages``
+        :param dict params: (optional) Search options.
+        :return: List of dictionaries that support attriubte-style access, which represent collection of TextMessages.
+        :rtype: list
+        """
+
+        _, _, text_messages = self.http_client.get("/text_messages", params=params)
+        return text_messages
+
+    def retrieve(self, id) :
+        """
+        Retrieve a single text message
+
+        Returns a single text message according to the unique  ID provided
+        If the specified user does not exist, this query returns an error
+
+        :calls: ``get /text_messages/{id}``
+        :param int id: Unique identifier of a TextMessage.
+        :return: Dictionary that support attriubte-style access and represent TextMessage resource.
+        :rtype: dict
+        """
+
+        _, _, text_message = self.http_client.get("/text_messages/{id}".format(id=id))
+        return text_message
+
 class UsersService(object):
     """
     :class:`basecrm.UsersService` is used by :class:`basecrm.Client` to make
@@ -2009,3 +2061,75 @@ class UsersService(object):
 
         _, _, resource = self.http_client.get("/users/self")
         return resource
+
+class VisitsService(object):
+    """
+    :class:`basecrm.VisitsService` is used by :class:`basecrm.Client` to make
+    actions related to Visit resource.
+
+    Normally you won't instantiate this class directly.
+    """
+
+
+    def __init__(self, http_client):
+        """
+        :param :class:`basecrm.HttpClient` http_client: Pre configured high-level http client.
+        """
+
+        self.__http_client = http_client
+
+    @property
+    def http_client(self):
+        return self.__http_client
+
+
+    def list(self, **params):
+        """
+        Retrieve visits
+
+        Returns Visits, according to the parameters provided
+
+        :calls: ``get /visits``
+        :param dict params: (optional) Search options.
+        :return: List of dictionaries that support attriubte-style access, which represent collection of Visits.
+        :rtype: list
+        """
+
+        _, _, visits = self.http_client.get("/visits", params=params)
+        return visits
+
+class VisitOutcomesService(object):
+    """
+    :class:`basecrm.VisitOutcomesService` is used by :class:`basecrm.Client` to make
+    actions related to VisitOutcome resource.
+
+    Normally you won't instantiate this class directly.
+    """
+
+
+    def __init__(self, http_client):
+        """
+        :param :class:`basecrm.HttpClient` http_client: Pre configured high-level http client.
+        """
+
+        self.__http_client = http_client
+
+    @property
+    def http_client(self):
+        return self.__http_client
+
+
+    def list(self, **params):
+        """
+        Retrieve visit outcomes
+
+        Returns Visit Outcomes, according to the parameters provided
+
+        :calls: ``get /visit_outcomes``
+        :param dict params: (optional) Search options.
+        :return: List of dictionaries that support attriubte-style access, which represent collection of VisitOutcomes.
+        :rtype: list
+        """
+
+        _, _, visit_outcomes = self.http_client.get("/visit_outcomes", params=params)
+        return visit_outcomes
