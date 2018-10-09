@@ -1,5 +1,13 @@
 ## CHANGELOG
 
+### v1.2.7 (2018-10-09)
+ **Features and Improvements**
+
+ * New resources:
+     * TextMessage
+     * Visit
+     * VisitOutcome
+
 ### v1.2.6 (2018-06-05)
 
 **Features and Improvements**
