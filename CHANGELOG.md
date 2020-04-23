@@ -1,5 +1,9 @@
 ## CHANGELOG
 
+### v1.2.8 (2020-04-23)
+
+* Updated license to Apache License 2.0
+
 ### v1.2.7 (2018-10-09)
  **Features and Improvements**
 
