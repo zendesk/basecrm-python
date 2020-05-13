@@ -12,6 +12,7 @@ setup(
     version='1.2.8',
     description='BaseCRM Official API V2 library client for Python',
     long_description=README,
+    long_description_content_type="text/markdown",
     author='Zendesk',
     author_email='opensource@zendesk.com',
     url='https://github.com/basecrm/basecrm-python',
