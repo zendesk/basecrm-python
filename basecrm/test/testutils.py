@@ -1,12 +1,13 @@
 import unittest
 import os
 import random
+import time
 import munch
 
 import basecrm
 
-def rand():
-    return str(random.randint(1, 1000000000))
+def timestamp():
+    return str(int(time.time())) + str(random.randint(1, 100000))
 
 def lazyproperty(function):
     attribute = '__lazy__' + function.__name__
@@ -142,16 +143,16 @@ class BaseTestCase(unittest.TestCase, UnittestCompat):
     def create_contact(self, **attributes):
         contact = {
             'description': "I know him via Tom",
-            'email': "mark@designservices.com",
+            'email': "mark{0}@example.com".format(timestamp()),
             'facebook': "mjohnson",
             'fax': "+44-208-1234567",
-            'first_name': 'Mark' +  rand(),
+            'first_name': 'Mark' +  timestamp(),
             'industry': "Design Services",
             'is_organization': False,
-            'last_name': 'Johnson' +  rand(),
+            'last_name': 'Johnson' +  timestamp(),
             'linkedin': "mjohnson",
             'mobile': "508-778-6516",
-            'name': 'Design Services Company' +  rand(),
+            'name': 'Design Services Company' +  timestamp(),
             'phone': "508-778-6516",
             'skype': "mjohnson",
             'tags': ["important"],
@@ -170,7 +171,7 @@ class BaseTestCase(unittest.TestCase, UnittestCompat):
             'currency': "EUR",
             'dropbox_email': "dropbox@4e627bcd.deals.futuresimple.com",
             'hot': True,
-            'name': 'Website Redesign' +  rand(),
+            'name': 'Website Redesign' +  timestamp(),
             'tags': ["important"],
             'value': 1000,
             'contact_id': self.create_contact().id,
@@ -183,7 +184,7 @@ class BaseTestCase(unittest.TestCase, UnittestCompat):
 
     def create_deal_source(self, **attributes):
         deal_source = {
-            'name': 'Word of mouth' +  rand(),
+            'name': 'Word of mouth' +  timestamp(),
         }
         deal_source.update(attributes)
         deal_source = self.client.deal_sources.create(**deal_source);
@@ -193,7 +194,7 @@ class BaseTestCase(unittest.TestCase, UnittestCompat):
 
     def create_deal_unqualified_reason(self, **attributes):
         deal_unqualified_reason = {
-            'name': 'We were too expensive' +  rand(),
+            'name': 'We were too expensive' +  timestamp(),
         }
         deal_unqualified_reason.update(attributes)
         deal_unqualified_reason = self.client.deal_unqualified_reasons.create(**deal_unqualified_reason);
@@ -204,12 +205,12 @@ class BaseTestCase(unittest.TestCase, UnittestCompat):
     def create_lead(self, **attributes):
         lead = {
             'description': "I know him via Tom",
-            'email': "mark@designservices.com",
+            'email': "edd{0}@example.com".format(int(time.time())),
             'facebook': "mjohnson",
             'fax': "+44-208-1234567",
-            'first_name': 'Mark' +  rand(),
+            'first_name': 'Mark' +  timestamp(),
             'industry': "Design Services",
-            'last_name': 'Johnson' +  rand(),
+            'last_name': 'Johnson' +  timestamp(),
             'linkedin': "mjohnson",
             'mobile': "508-778-6516",
             'phone': "508-778-6516",
@@ -228,7 +229,7 @@ class BaseTestCase(unittest.TestCase, UnittestCompat):
 
     def create_lead_source(self, **attributes):
         lead_source = {
-            'name': 'Word of mouth' +  rand(),
+            'name': 'Word of mouth' +  timestamp(),
         }
         lead_source.update(attributes)
         lead_source = self.client.lead_sources.create(**lead_source);
@@ -256,7 +257,7 @@ class BaseTestCase(unittest.TestCase, UnittestCompat):
 
     def create_loss_reason(self, **attributes):
         loss_reason = {
-            'name': 'We were too expensive' +  rand(),
+            'name': 'We were too expensive' +  timestamp(),
         }
         loss_reason.update(attributes)
         loss_reason = self.client.loss_reasons.create(**loss_reason);
@@ -290,7 +291,7 @@ class BaseTestCase(unittest.TestCase, UnittestCompat):
 
     def create_product(self, **attributes):
         product = {
-            'name': 'Enterprise Plan' +  rand(),
+            'name': 'Enterprise Plan' +  timestamp(),
             'description': 'Includes more storage options',
             'sku': 'enterprise-plan',
             'active': True,
@@ -308,7 +309,7 @@ class BaseTestCase(unittest.TestCase, UnittestCompat):
 
     def create_source(self, **attributes):
         source = {
-            'name': 'Word of mouth' +  rand(),
+            'name': 'Word of mouth' +  timestamp(),
         }
         source.update(attributes)
         source = self.client.sources.create(**source);
@@ -318,7 +319,7 @@ class BaseTestCase(unittest.TestCase, UnittestCompat):
 
     def create_tag(self, **attributes):
         tag = {
-            'name': 'publisher' +  rand(),
+            'name': 'publisher' +  timestamp(),
             'resource_type': 'contact',
         }
         tag.update(attributes)
@@ -342,10 +343,9 @@ class BaseTestCase(unittest.TestCase, UnittestCompat):
 
     def create_deal_with_decimal_value(self, **attributes):
         deal = {
-            'id': rand(),
             'currency': "EUR",
             'hot': True,
-            'name': 'Website Redesign' +  rand(),
+            'name': 'Website Redesign' +  timestamp(),
             'tags': ["important"],
             'value': '11.12',
             'contact_id': self.create_contact().id,
