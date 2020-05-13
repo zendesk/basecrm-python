@@ -1,5 +1,9 @@
 ## CHANGELOG
 
+### v1.2.9 (2020-05-13)
+
+* Fix license metadata in package
+
 ### v1.2.8 (2020-04-23)
 
 * Updated license to Apache License 2.0
