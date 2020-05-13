@@ -5,7 +5,6 @@ name: Upload Python Package
 
 on:
   push:
-    branches: [ld/publish-pypi-action]
     tags: v*
 
 jobs:
