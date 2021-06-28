@@ -1,5 +1,10 @@
 ## CHANGELOG
 
+### v1.2.10 (2021-06-28)
+ **Features and Improvements**
+
+ * Added possibility to set deal's 'added_on' attribute
+
 ### v1.2.9 (2020-05-13)
 
 * Fix license metadata in package

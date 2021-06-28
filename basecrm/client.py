@@ -12,7 +12,7 @@ class Client(object):
     :attribute :class:`Configuration <basecrm.Configuration>` config: Current Base CRM client configuration.
     :attribute :class:`HttpClient <basecrm.HttpClient>` http_client: Http client.
 
-    :copyright: (c) 2015 - 2018 by BaseCRM developers (developers@getbase.com).
+    :copyright: (c) 2015 - 2021 by BaseCRM developers (developers@getbase.com).
     :license: MIT, see LICENSE for more details.
     """
 
