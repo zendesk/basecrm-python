@@ -19,7 +19,7 @@ setup(
     license='Apache License 2.0',
     packages=['basecrm', 'basecrm.test'],
     test_suite='basecrm.test.all',
-    install_requires=['requests', 'munch'],
+    install_requires=['requests<=2.25.1', 'munch'],
     tests_require=['mock'],
     use_2to3=True,
     classifiers=[
