@@ -1,17 +1,44 @@
+import datetime
+import decimal
+import uuid
+
 import requests
 import json
 
 
 from munch import munchify
-from decimal import *
 
 from basecrm.errors import RateLimitError, RequestError, ResourceError, ServerError
 
-class DecimalEncoder(json.JSONEncoder):
+
+class ExtendedJSONEncoder(json.JSONEncoder):
+    """
+    JSONEncoder subclass that knows how to encode date/time, decimal types, and
+    UUIDs.
+
+    Borrowed from https://github.com/django/django/blob/main/django/core/serializers/json.py#L77
+    """
+
     def default(self, o):
-        if isinstance(o, Decimal):
-            return float(o)
-        super(DecimalEncoder, self).default(o)
+        # See "Date Time String Format" in the ECMA-262 specification.
+        if isinstance(o, datetime.datetime):
+            r = o.isoformat()
+            if o.microsecond:
+                r = r[:23] + r[26:]
+            if r.endswith("+00:00"):
+                r = r[:-6] + "Z"
+            return r
+        elif isinstance(o, datetime.date):
+            return o.isoformat()
+        elif isinstance(o, datetime.time):
+            r = o.isoformat()
+            if o.microsecond:
+                r = r[:12]
+            return r
+        elif isinstance(o, (decimal.Decimal, uuid.UUID)):
+            return str(o)
+        else:
+            return super().default(o)
 
 
 class HttpClient(object):
@@ -132,7 +159,7 @@ class HttpClient(object):
         if body is not None:
             headers['Content-Type'] = 'application/json'
             payload = body if raw else self.wrap_envelope(body)
-            body = json.dumps(self.wrap_envelope(body), cls=DecimalEncoder)
+            body = json.dumps(self.wrap_envelope(body), cls=ExtendedJSONEncoder)
 
         resp = requests.request(method, url,
                                 params=params,
