@@ -145,7 +145,7 @@ class ContactsService(object):
         return self.__http_client
 
 
-    def list(self, **params):
+    def list(self, params=None, **kwargs):
         """
         Retrieve all contacts
 
@@ -157,7 +157,7 @@ class ContactsService(object):
         :rtype: list
         """
 
-        _, _, contacts = self.http_client.get("/contacts", params=params)
+        _, _, contacts = self.http_client.get("/contacts", params=params, **kwargs)
         return contacts
 
     def create(self, *args, **kwargs):
@@ -267,7 +267,7 @@ class DealsService(object):
         return self.__http_client
 
 
-    def list(self, **params):
+    def list(self, params=None, **kwargs):
         """
         Retrieve all deals
 
@@ -279,9 +279,15 @@ class DealsService(object):
         :rtype: list
         """
 
-        _, _, deals = self.http_client.get("/deals", params=params)
-        for deal in deals:
-            deal['value'] = Coercion.to_decimal(deal['value'])
+        _, _, deals = self.http_client.get("/deals", params=params, **kwargs)
+        if 'raw' in kwargs:
+            # unwrap_envelope() isn't called in case of raw
+            munchified_deals = [deal_dict['data'] for deal_dict in deals['items']]
+            for deal in munchified_deals:
+                deal['value'] = Coercion.to_decimal(deal['value'])
+        else:
+            for deal in deals:
+                deal['value'] = Coercion.to_decimal(deal['value'])
 
         return deals
 
@@ -650,7 +656,7 @@ class LeadsService(object):
         return self.__http_client
 
 
-    def list(self, **params):
+    def list(self, params=None, **kwargs):
         """
         Retrieve all leads
 
@@ -662,7 +668,7 @@ class LeadsService(object):
         :rtype: list
         """
 
-        _, _, leads = self.http_client.get("/leads", params=params)
+        _, _, leads = self.http_client.get("/leads", params=params, **kwargs)
         return leads
 
     def create(self, *args, **kwargs):
@@ -2018,7 +2024,7 @@ class UsersService(object):
         return self.__http_client
 
 
-    def list(self, **params):
+    def list(self, params=None, **kwargs):
         """
         Retrieve all users
 
@@ -2030,7 +2036,7 @@ class UsersService(object):
         :rtype: list
         """
 
-        _, _, users = self.http_client.get("/users", params=params)
+        _, _, users = self.http_client.get("/users", params=params, **kwargs)
         return users
 
     def retrieve(self, id) :
